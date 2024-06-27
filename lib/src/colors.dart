@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 abstract class DarkThemeColors {
   static const background = Color(0xff222222);
@@ -8,6 +9,7 @@ abstract class DarkThemeColors {
   static const timerProgress = Color(0xff343434);
   static const inactiveRound = Color(0xff6F6F70);
   static const menuRedButtons = Color(0xffFF3434);
+  static const textColor = Colors.white;
 }
 
 abstract class LightThemeColors {

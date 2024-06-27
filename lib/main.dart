@@ -1,3 +1,4 @@
+import 'package:arm_fight_helper/screeens/competition_screen.dart';
 import 'package:arm_fight_helper/screeens/main_screen.dart';
 import 'package:arm_fight_helper/theme.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +17,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: buildLightTheme(),
-      home: const MainScreen(),
+      title: 'ArmFight Helper',
+      theme: buildDarkTheme(),
+      home: const CompetitionScreen(),
     );
   }
 }
