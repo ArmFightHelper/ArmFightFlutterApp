@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 //
 // Extention:
-// Theme.of(context).extension<ThemeColors>!.neededColor
+// Theme.of(context).extension<ThemeColors>!().neededColor
 
 
 
@@ -22,17 +22,19 @@ ThemeData buildDarkTheme() {
         error: Colors.redAccent,
         onError: Colors.white,
         surface: DarkThemeColors.timerProgress,
-        onSurface: DarkThemeColors.timerProgress
+        onSurface: DarkThemeColors.inactiveRound
     ),
     extensions: <ThemeExtension<dynamic>>[
       ThemeColors.dark,
     ],
     brightness: Brightness.dark,
-    scaffoldBackgroundColor: const Color(0xFF222222),
+    scaffoldBackgroundColor: DarkThemeColors.background,
     focusColor: Colors.blue.withOpacity(0.2),
     textTheme: const TextTheme(
-      bodyMedium: TextStyle(color: Colors.white),
-      bodyLarge: TextStyle(color: Colors.white),
+      headlineLarge: TextStyle(color: DarkThemeColors.textColor, fontWeight: FontWeight.w700, fontSize: 45),
+      headlineMedium: TextStyle(color: DarkThemeColors.textColor, fontWeight: FontWeight.w700),
+      bodyMedium: TextStyle(color: DarkThemeColors.textColor),
+      bodyLarge: TextStyle(color: DarkThemeColors.textColor),
     )
   );
 }
@@ -65,15 +67,37 @@ ThemeData buildLightTheme() {
 
 class ThemeColors extends ThemeExtension<ThemeColors> {
   final Color mainMenuButtonColor;
+  final Color readyColor;
+  final Color goColor;
 
-  static get light => ThemeColors(mainMenuButtonColor: const Color(0xffFF3434));
-  static get dark => ThemeColors(mainMenuButtonColor: const Color(0xffFF3434));
+  static get light => ThemeColors(
+      mainMenuButtonColor: const Color(0xffFF3434),
+      readyColor: LightThemeColors.ready,
+      goColor: LightThemeColors.go
+  );
+  static get dark => ThemeColors(
+      mainMenuButtonColor: const Color(0xffFF3434),
+      readyColor: DarkThemeColors.ready,
+      goColor: DarkThemeColors.go
+  );
 
-  ThemeColors({required this.mainMenuButtonColor});
+  ThemeColors({
+    required this.mainMenuButtonColor,
+    required this.readyColor,
+    required this.goColor
+  });
 
   @override
-  ThemeExtension<ThemeColors> copyWith({Color? mainMenuButtonColor}) {
-    return ThemeColors(mainMenuButtonColor: mainMenuButtonColor ?? this.mainMenuButtonColor);
+  ThemeExtension<ThemeColors> copyWith({
+    Color? mainMenuButtonColor,
+    Color? readyColor,
+    Color? goColor
+  }) {
+    return ThemeColors(
+      mainMenuButtonColor: mainMenuButtonColor ?? this.mainMenuButtonColor,
+      readyColor: readyColor ?? this.readyColor,
+      goColor: goColor ?? this.goColor
+    );
   }
 
   @override
@@ -86,6 +110,8 @@ class ThemeColors extends ThemeExtension<ThemeColors> {
     }
     return ThemeColors(
       mainMenuButtonColor: Color.lerp(mainMenuButtonColor, other.mainMenuButtonColor, t)!,
+      readyColor: Color.lerp(readyColor, other.readyColor, t)!,
+      goColor: Color.lerp(goColor, other.goColor, t)!,
     );
   }
 }
