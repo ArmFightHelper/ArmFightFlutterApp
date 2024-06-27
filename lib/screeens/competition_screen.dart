@@ -1,3 +1,5 @@
+import 'package:arm_fight_helper/widgets/pause_button.dart';
+import 'package:arm_fight_helper/widgets/rounds.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,7 +28,10 @@ class CompetitionScreen extends ConsumerWidget {
         child: Column(
             children: [
               SizedBox(height: 40),
-              StartIndicatorWidget()
+              StartIndicatorWidget(),
+              RoundsWidget(),
+              Expanded(child: SizedBox()),
+              PauseButtonWidget()
             ],
         ),
       ),

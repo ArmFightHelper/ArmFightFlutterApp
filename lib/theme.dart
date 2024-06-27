@@ -22,7 +22,7 @@ ThemeData buildDarkTheme() {
         error: Colors.redAccent,
         onError: Colors.white,
         surface: DarkThemeColors.timerProgress,
-        onSurface: DarkThemeColors.timerProgress
+        onSurface: DarkThemeColors.inactiveRound
     ),
     extensions: <ThemeExtension<dynamic>>[
       ThemeColors.dark,
