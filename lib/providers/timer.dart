@@ -1,46 +1,55 @@
+import 'package:arm_fight_helper/providers/random_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 import 'indicator_phase.dart';
 
 final timerProvider = ChangeNotifierProvider<TimerNotifier>((ref) {
-  return TimerNotifier(ref.watch(startIndicatorPhaseProvider));
+  return TimerNotifier(
+    ref.watch(startIndicatorPhaseProvider),
+    ref.watch(randomTimerProvider)
+  );
 });
 
 class TimerNotifier with ChangeNotifier {
   late PausableTimer _timer;
-  int _timerValue = 0;
-  int _totalTime = 0;
+  late int _timerValue;
+  late int _totalTime;
   bool _onPause = true;
   StartIndicatorPhaseNotifier _startIndicatorPhaseNotifier;
+  RandomTimerNotifier _randomTimerNotifier;
 
   get timeLeft => _timerValue;
+  get totalTime => _totalTime;
 
-  TimerNotifier(this._startIndicatorPhaseNotifier) {
-    initializeTimer(timePeriod: 4);
+  TimerNotifier(this._startIndicatorPhaseNotifier, this._randomTimerNotifier) {
+    initializeTimer(timePeriod: 7);
+    // TODO: get from settings
   }
 
 
   void initializeTimer({required int timePeriod}) async {
-    int _timeLeft = timePeriod;
+    int timeLeft = timePeriod;
     _timerValue = timePeriod;
+    _totalTime = timePeriod;
 
     _timer = PausableTimer.periodic(
         const Duration(seconds: 1),
             () {
-          if (_timeLeft == 0) {
+          if (timeLeft == 0) {
             _timer.pause();
             _timer.reset();
-            _timeLeft = timePeriod;
+            timeLeft = timePeriod;
             _timerValue = timePeriod;
 
             _startIndicatorPhaseNotifier.nextPhase();
+            _randomTimerNotifier.startTimer();
             return;
             // Proceed to next phase
           }
-          _timeLeft--;
+          timeLeft--;
           _totalTime++;
-          _timerValue = _timeLeft;
+          _timerValue = timeLeft;
           notifyListeners();
         }
     );

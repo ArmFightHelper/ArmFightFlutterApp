@@ -35,14 +35,7 @@ class StartIndicatorWidget extends ConsumerWidget {
                 width: 155,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: switch (ref.watch(startIndicatorPhaseProvider).currentPhase) {
-                    Phases.start => Theme.of(context).colorScheme.secondary,
-                    Phases.preparation =>Theme.of(context).colorScheme.secondary,
-                    Phases.ready => Theme.of(context).extension<ThemeColors>()!.readyColor,
-                    Phases.go => Theme.of(context).extension<ThemeColors>()!.goColor,
-                    Object() => throw UnimplementedError(),
-                    null => throw UnimplementedError(),
-                  }
+                  color: Phases.toColor(context: context, phase: ref.watch(startIndicatorPhaseProvider).currentPhase)
                 )
               ),
 
@@ -67,16 +60,18 @@ class StartIndicatorWidget extends ConsumerWidget {
           SizedBox(
             width: 260,
             height: 260,
-            child: CircularProgressIndicator(
-              value: 1,
-              strokeWidth: 13,
-              color: switch (ref.watch(startIndicatorPhaseProvider).currentPhase) {
-                Phases.start => Theme.of(context).colorScheme.secondary,
-                Phases.preparation =>Theme.of(context).colorScheme.secondary,
-                Phases.ready => Theme.of(context).extension<ThemeColors>()!.readyColor,
-                Phases.go => Theme.of(context).extension<ThemeColors>()!.goColor,
-                Object() => throw UnimplementedError(),
-                null => throw UnimplementedError(),
+            child: TweenAnimationBuilder<double>(
+              tween: Tween<double>(
+                begin: 0,
+                end: ref.watch(timerProvider).timeLeft / ref.watch(timerProvider).totalTime,
+              ),
+              duration: const Duration(milliseconds: 500),
+              builder: (context, value, child) {
+                return CircularProgressIndicator(
+                  value: value,
+                  strokeWidth: 13,
+                  color: Phases.toColor(context: context, phase: ref.watch(startIndicatorPhaseProvider).currentPhase),
+                );
               },
             ),
           ),
