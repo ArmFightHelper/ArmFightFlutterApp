@@ -1,5 +1,6 @@
 import 'package:arm_fight_helper/screeens/competition_screen.dart';
 import 'package:arm_fight_helper/screeens/main_screen.dart';
+import 'package:arm_fight_helper/screeens/training_screen.dart';
 import 'package:arm_fight_helper/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'ArmFight Helper',
       theme: buildDarkTheme(),
-      home: const CompetitionScreen(),
+      home: const TrainingScreen(),
     );
   }
 }
