@@ -90,7 +90,7 @@ class MainScreen extends ConsumerWidget {
                     ref.read(themeProvider.notifier).toggleTheme();
                   },
                   child: Icon(
-                    Icons.brightness_6,
+                    Icons.wb_sunny_outlined,
                     color: colorScheme.primary,
                   ),
                 ),
@@ -111,7 +111,7 @@ class MainScreen extends ConsumerWidget {
                   child: Text(
                   localizations.translate("history"),
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
+                      // fontWeight: FontWeight.bold,
                       fontSize: 20,
                       color: colorScheme.primary,
                     ),
