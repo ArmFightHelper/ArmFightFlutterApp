@@ -42,7 +42,7 @@ class RandomTimerNotifier with ChangeNotifier {
             return;
           }
 
-          randomFlag = Random().nextInt(9);
+          randomFlag = Random().nextInt(9); // 10% chance for every tick
 
           if (randomFlag == 1) {
             print("GO on ${_timerTicks * _tick / 1000}");

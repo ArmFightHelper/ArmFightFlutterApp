@@ -60,10 +60,19 @@ class StartIndicatorWidget extends ConsumerWidget {
           SizedBox(
             width: 260,
             height: 260,
-            child: CircularProgressIndicator(
-              value: 1,
-              strokeWidth: 13,
-              color: Phases.toColor(context: context, phase: ref.watch(startIndicatorPhaseProvider).currentPhase),
+            child: TweenAnimationBuilder<double>(
+              tween: Tween<double>(
+                begin: 0,
+                end: ref.watch(timerProvider).timeLeft / ref.watch(timerProvider).totalTime,
+              ),
+              duration: const Duration(milliseconds: 500),
+              builder: (context, value, child) {
+                return CircularProgressIndicator(
+                  value: value,
+                  strokeWidth: 13,
+                  color: Phases.toColor(context: context, phase: ref.watch(startIndicatorPhaseProvider).currentPhase),
+                );
+              },
             ),
           ),
 

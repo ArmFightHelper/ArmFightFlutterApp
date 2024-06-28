@@ -13,31 +13,33 @@ final timerProvider = ChangeNotifierProvider<TimerNotifier>((ref) {
 
 class TimerNotifier with ChangeNotifier {
   late PausableTimer _timer;
-  int _timerValue = 0;
-  int _totalTime = 0;
+  late int _timerValue;
+  late int _totalTime;
   bool _onPause = true;
   StartIndicatorPhaseNotifier _startIndicatorPhaseNotifier;
   RandomTimerNotifier _randomTimerNotifier;
 
   get timeLeft => _timerValue;
+  get totalTime => _totalTime;
 
   TimerNotifier(this._startIndicatorPhaseNotifier, this._randomTimerNotifier) {
-    initializeTimer(timePeriod: 1);
+    initializeTimer(timePeriod: 7);
     // TODO: get from settings
   }
 
 
   void initializeTimer({required int timePeriod}) async {
-    int _timeLeft = timePeriod;
+    int timeLeft = timePeriod;
     _timerValue = timePeriod;
+    _totalTime = timePeriod;
 
     _timer = PausableTimer.periodic(
         const Duration(seconds: 1),
             () {
-          if (_timeLeft == 0) {
+          if (timeLeft == 0) {
             _timer.pause();
             _timer.reset();
-            _timeLeft = timePeriod;
+            timeLeft = timePeriod;
             _timerValue = timePeriod;
 
             _startIndicatorPhaseNotifier.nextPhase();
@@ -45,9 +47,9 @@ class TimerNotifier with ChangeNotifier {
             return;
             // Proceed to next phase
           }
-          _timeLeft--;
+          timeLeft--;
           _totalTime++;
-          _timerValue = _timeLeft;
+          _timerValue = timeLeft;
           notifyListeners();
         }
     );
