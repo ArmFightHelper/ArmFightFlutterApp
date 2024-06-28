@@ -1,7 +1,7 @@
-import 'package:arm_fight_helper/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'history_screen.dart';
+import 'package:arm_fight_helper/theme.dart'; // Ensure this import points to the correct path of your theme file
 
 class MainScreen extends ConsumerWidget {
   const MainScreen({super.key});
@@ -9,6 +9,8 @@ class MainScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeColors = Theme.of(context).extension<ThemeColors>()!;
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -36,7 +38,7 @@ class MainScreen extends ConsumerWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
-                    color: Colors.white,
+                    color: colorScheme.onPrimary,
                   ),
                 ),
               ),
@@ -63,7 +65,7 @@ class MainScreen extends ConsumerWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
-                    color: Colors.white,
+                    color: colorScheme.onPrimary,
                   ),
                 ),
               ),
@@ -74,7 +76,7 @@ class MainScreen extends ConsumerWidget {
               children: [
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 47, 47, 47),
+                    backgroundColor: colorScheme.surface,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(45.0),
                     ),
@@ -83,11 +85,14 @@ class MainScreen extends ConsumerWidget {
                   onPressed: () {
                     ref.read(themeProvider.notifier).toggleTheme();
                   },
-                  child: Icon(Icons.brightness_6, color: Colors.white,),
+                  child: Icon(
+                    Icons.brightness_6,
+                    color: colorScheme.primary,
+                  ),
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 47, 47, 47),
+                    backgroundColor: colorScheme.surface,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(45.0),
                     ),
@@ -104,13 +109,13 @@ class MainScreen extends ConsumerWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
-                      color: Color.fromARGB(255, 255, 255, 255),
+                      color: colorScheme.primary,
                     ),
                   ),
                 ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 47, 47, 47),
+                    backgroundColor: colorScheme.surface,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(45.0),
                     ),
@@ -119,7 +124,10 @@ class MainScreen extends ConsumerWidget {
                   onPressed: () {
                     ref.read(languageProvider.notifier).toggleLanguage();
                   },
-                  child: Icon(Icons.language, color: Colors.white,),
+                  child: Icon(
+                    Icons.language,
+                    color: colorScheme.primary,
+                  ),
                 ),
               ],
             ),
@@ -142,8 +150,6 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 }
-
-
 
 final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeData>((ref) {
   return ThemeNotifier();
