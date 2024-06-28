@@ -1,5 +1,6 @@
 import 'package:arm_fight_helper/widgets/pause_button.dart';
 import 'package:arm_fight_helper/widgets/rounds.dart';
+import 'package:arm_fight_helper/widgets/timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,7 +30,8 @@ class TrainingScreen extends ConsumerWidget {
           children: [
             SizedBox(height: 40),
             StartIndicatorWidget(),
-            RoundsWidget(),
+            Expanded(child: SizedBox()),
+            TimeCountWidget(),
             Expanded(child: SizedBox()),
             PauseButtonWidget()
           ],
