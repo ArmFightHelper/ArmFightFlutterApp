@@ -1,3 +1,4 @@
+import 'package:arm_fight_helper/screeens/competition_screen.dart';
 import 'package:arm_fight_helper/screeens/main_screen.dart';
 import 'package:arm_fight_helper/theme.dart';
 import 'package:flutter/material.dart';
