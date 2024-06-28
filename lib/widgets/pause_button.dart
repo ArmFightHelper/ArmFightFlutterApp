@@ -15,7 +15,8 @@ class PauseButtonWidget extends ConsumerWidget {
         fillColor: Theme.of(context).colorScheme.secondary,
         padding: const EdgeInsets.all(15.0),
         shape: const CircleBorder(),
-        child: const Icon(
+        child: Icon(
+          color: Theme.of(context).colorScheme.onSecondary,
           Icons.pause_rounded,
           size: 40.0,
         ),
