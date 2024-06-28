@@ -1,3 +1,4 @@
+import 'package:arm_fight_helper/screeens/competition_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'history_screen.dart';
@@ -70,7 +71,7 @@ class MainScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -145,7 +146,18 @@ class SettingsScreen extends StatelessWidget {
     return Container(
       height: MediaQuery.of(context).size.height / 2,
       child: Center(
-        child: Text("Settings Screen"),
+        child: ElevatedButton(
+          child: Text("WIP: go to competition"),
+          onPressed: () {
+            Navigator.of(context).pop();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const CompetitionScreen()),
+            );
+          },
+
+
+        ),
       ),
     );
   }

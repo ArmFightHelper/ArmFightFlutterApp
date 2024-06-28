@@ -20,8 +20,8 @@ class StartIndicatorWidget extends ConsumerWidget {
         Stack(
           children: <Widget>[
             Container(
-              height: 150,
-              width: 150,
+              height: 155,
+              width: 155,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Theme.of(context).extension<ThemeColors>()!.readyColor
@@ -31,8 +31,8 @@ class StartIndicatorWidget extends ConsumerWidget {
             Positioned.fill(
                 child: BackdropFilter(
                   filter: ui.ImageFilter.blur(
-                    sigmaX: 25.0,
-                    sigmaY: 25.0,
+                    sigmaX: 26.0,
+                    sigmaY: 26.0,
                   ),
                   child: Container(
                     color: Colors.transparent,
