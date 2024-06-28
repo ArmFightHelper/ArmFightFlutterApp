@@ -1,10 +1,14 @@
+import 'package:arm_fight_helper/providers/random_timer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 import 'indicator_phase.dart';
 
 final timerProvider = ChangeNotifierProvider<TimerNotifier>((ref) {
-  return TimerNotifier(ref.watch(startIndicatorPhaseProvider));
+  return TimerNotifier(
+    ref.watch(startIndicatorPhaseProvider),
+    ref.watch(randomTimerProvider)
+  );
 });
 
 class TimerNotifier with ChangeNotifier {
@@ -13,11 +17,13 @@ class TimerNotifier with ChangeNotifier {
   int _totalTime = 0;
   bool _onPause = true;
   StartIndicatorPhaseNotifier _startIndicatorPhaseNotifier;
+  RandomTimerNotifier _randomTimerNotifier;
 
   get timeLeft => _timerValue;
 
-  TimerNotifier(this._startIndicatorPhaseNotifier) {
-    initializeTimer(timePeriod: 4);
+  TimerNotifier(this._startIndicatorPhaseNotifier, this._randomTimerNotifier) {
+    initializeTimer(timePeriod: 1);
+    // TODO: get from settings
   }
 
 
@@ -35,6 +41,7 @@ class TimerNotifier with ChangeNotifier {
             _timerValue = timePeriod;
 
             _startIndicatorPhaseNotifier.nextPhase();
+            _randomTimerNotifier.startTimer();
             return;
             // Proceed to next phase
           }

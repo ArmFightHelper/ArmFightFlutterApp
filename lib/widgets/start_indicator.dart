@@ -35,14 +35,7 @@ class StartIndicatorWidget extends ConsumerWidget {
                 width: 155,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: switch (ref.watch(startIndicatorPhaseProvider).currentPhase) {
-                    Phases.start => Theme.of(context).colorScheme.secondary,
-                    Phases.preparation =>Theme.of(context).colorScheme.secondary,
-                    Phases.ready => Theme.of(context).extension<ThemeColors>()!.readyColor,
-                    Phases.go => Theme.of(context).extension<ThemeColors>()!.goColor,
-                    Object() => throw UnimplementedError(),
-                    null => throw UnimplementedError(),
-                  }
+                  color: Phases.toColor(context: context, phase: ref.watch(startIndicatorPhaseProvider).currentPhase)
                 )
               ),
 
@@ -70,14 +63,7 @@ class StartIndicatorWidget extends ConsumerWidget {
             child: CircularProgressIndicator(
               value: 1,
               strokeWidth: 13,
-              color: switch (ref.watch(startIndicatorPhaseProvider).currentPhase) {
-                Phases.start => Theme.of(context).colorScheme.secondary,
-                Phases.preparation =>Theme.of(context).colorScheme.secondary,
-                Phases.ready => Theme.of(context).extension<ThemeColors>()!.readyColor,
-                Phases.go => Theme.of(context).extension<ThemeColors>()!.goColor,
-                Object() => throw UnimplementedError(),
-                null => throw UnimplementedError(),
-              },
+              color: Phases.toColor(context: context, phase: ref.watch(startIndicatorPhaseProvider).currentPhase),
             ),
           ),
 
