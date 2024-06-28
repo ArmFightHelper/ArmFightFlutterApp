@@ -59,6 +59,8 @@ ThemeData buildLightTheme() {
       scaffoldBackgroundColor: Colors.white,
       focusColor: Colors.blue.withOpacity(0.2),
       textTheme: const TextTheme(
+        headlineLarge: TextStyle(color: LightThemeColors.textColor, fontWeight: FontWeight.w700, fontSize: 45),
+        headlineMedium: TextStyle(color: LightThemeColors.textColor, fontWeight: FontWeight.w700),
         bodyMedium: TextStyle(color: LightThemeColors.textColor),
         bodyLarge: TextStyle(color: LightThemeColors.textColor),
       )

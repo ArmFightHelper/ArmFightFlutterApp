@@ -74,7 +74,7 @@ class MainScreen extends ConsumerWidget {
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -150,6 +150,7 @@ class SettingsScreen extends StatelessWidget {
     return Container(
       height: MediaQuery.of(context).size.height / 2,
       child: Center(
+
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -166,6 +167,7 @@ class SettingsScreen extends StatelessWidget {
 ),
             ),
           ],
+
         ),
       ),
     );

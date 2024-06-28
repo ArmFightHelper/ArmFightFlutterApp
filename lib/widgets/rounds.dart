@@ -19,7 +19,9 @@ class RoundsWidget extends ConsumerWidget {
             width: 50,
             height: 13,
             decoration: BoxDecoration(
-              border: Border.all(),
+              border: Border.all(
+                color: Colors.transparent
+              ),
               borderRadius: BorderRadius.circular(15),
               color: Theme.of(context).extension<ThemeColors>()!.readyColor
             ),
@@ -58,9 +60,11 @@ class RoundsWidget extends ConsumerWidget {
             width: 50,
             height: 13,
             decoration: BoxDecoration(
-                border: Border.all(),
+                border: Border.all(
+                    color: Colors.transparent
+                ),
                 borderRadius: BorderRadius.circular(15),
-                color: Theme.of(context).extension<ThemeColors>()!.readyColor
+                color: Theme.of(context).colorScheme.onSurface
             ),
           ),
 
