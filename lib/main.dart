@@ -6,20 +6,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
 void main() {
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
+class MyApp extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final theme = ref.watch(themeProvider);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'ArmFight Helper',
-      theme: buildDarkTheme(),
-      home: const CompetitionScreen(),
+      theme: theme,
+      home: MainScreen(),
     );
   }
 }
