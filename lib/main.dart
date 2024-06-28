@@ -22,14 +22,15 @@ class MyApp extends ConsumerWidget {
       title: 'ArmFight Helper',
       theme: theme,
       locale: locale,
-      supportedLocales: [
+      supportedLocales: const [
         Locale('en'),
         Locale('ru'),
       ],
-      localizationsDelegates: [
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
       home: MainScreen(),
     );
