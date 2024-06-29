@@ -43,6 +43,7 @@ class RandomTimerNotifier with ChangeNotifier {
           }
 
           randomFlag = Random().nextInt(9); // 10% chance for every tick
+          // randomFlag = Random().nextInt(99); // 1% chance for every tick
 
           if (randomFlag == 1) {
             print("GO on ${_timerTicks * _tick / 1000}");
@@ -67,5 +68,12 @@ class RandomTimerNotifier with ChangeNotifier {
     // TODO: get from settings
     await Future.delayed(Duration(seconds: 2));
     _timer.start();
+  }
+
+
+  void stopTimer() {
+    print(_timer.hashCode);
+    _timer.pause();
+    _timer.reset();
   }
 }

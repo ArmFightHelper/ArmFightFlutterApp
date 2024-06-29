@@ -16,14 +16,14 @@ class TimerNotifier with ChangeNotifier {
   late int _timerValue;
   late int _totalTime;
   bool _onPause = true;
-  StartIndicatorPhaseNotifier _startIndicatorPhaseNotifier;
-  RandomTimerNotifier _randomTimerNotifier;
+  final StartIndicatorPhaseNotifier _startIndicatorPhaseNotifier;
+  final RandomTimerNotifier _randomTimerNotifier;
 
   get timeLeft => _timerValue;
   get totalTime => _totalTime;
 
   TimerNotifier(this._startIndicatorPhaseNotifier, this._randomTimerNotifier) {
-    initializeTimer(timePeriod: 7);
+    initializeTimer(timePeriod: 1);
     // TODO: get from settings
   }
 
@@ -70,6 +70,6 @@ class TimerNotifier with ChangeNotifier {
   void stopTimer() {
     _onPause = true;
     _timer.pause();
-    _timer.cancel();
+    _timer.reset();
   }
 }

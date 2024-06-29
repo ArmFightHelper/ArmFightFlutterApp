@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'package:arm_fight_helper/providers/indicator_phase.dart';
 import 'package:arm_fight_helper/providers/timer.dart';
-import 'package:arm_fight_helper/theme.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
