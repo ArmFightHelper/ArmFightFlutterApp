@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:arm_fight_helper/theme.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 enum Phases {

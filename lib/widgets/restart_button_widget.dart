@@ -1,7 +1,7 @@
-import 'package:arm_fight_helper/providers/indicator_phase.dart';
-import 'package:arm_fight_helper/providers/timer.dart';
+import 'package:arm_fight_helper/providers/phase_controller.dart';
+import 'package:arm_fight_helper/providers/random_timer_controller.dart';
+import 'package:arm_fight_helper/providers/timer_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../constants.dart';
@@ -20,12 +20,12 @@ class PauseButtonWidget extends ConsumerWidget {
           switch (currentPhase) {
             case Phases.preparation:
               ref.read(timerProvider).stopTimer();
-              ref.read(startIndicatorPhaseProvider).reset();
+              ref.read(startIndicatorPhaseProvider).resetRound();
               break;
             case Phases.ready:
               break;
             case Phases.go:
-              ref.read(startIndicatorPhaseProvider).reset();
+              ref.read(startIndicatorPhaseProvider).endCurrentRound();
               break;
             default:
               break;

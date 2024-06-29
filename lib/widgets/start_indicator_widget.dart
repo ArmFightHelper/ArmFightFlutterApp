@@ -1,6 +1,7 @@
 import 'dart:math';
-import 'package:arm_fight_helper/providers/indicator_phase.dart';
-import 'package:arm_fight_helper/providers/timer.dart';
+import 'package:arm_fight_helper/providers/phase_controller.dart';
+import 'package:arm_fight_helper/providers/rounds_controller.dart';
+import 'package:arm_fight_helper/providers/timer_controller.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,9 @@ class StartIndicatorWidget extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return GestureDetector(
       onTap: () {
-        if (ref.watch(startIndicatorPhaseProvider).currentPhase == Phases.start) {
+        if (ref.watch(startIndicatorPhaseProvider).currentPhase == Phases.start
+            && ref.watch(roundsControllerProvider).currentRoundIndex != ref.watch(roundsControllerProvider).roundsNum
+        ) {
           ref.read(startIndicatorPhaseProvider).nextPhase();
           ref.read(timerProvider).startTimer();
         }

@@ -1,8 +1,8 @@
-import 'package:arm_fight_helper/providers/random_timer.dart';
+import 'package:arm_fight_helper/providers/random_timer_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pausable_timer/pausable_timer.dart';
-import 'indicator_phase.dart';
+import 'phase_controller.dart';
 
 final timerProvider = ChangeNotifierProvider<TimerNotifier>((ref) {
   return TimerNotifier(
