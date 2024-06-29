@@ -1,9 +1,9 @@
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pausable_timer/pausable_timer.dart';
-import 'indicator_phase.dart';
+import 'phase_controller.dart';
 
 final randomTimerProvider = ChangeNotifierProvider<RandomTimerNotifier>((ref) {
   return RandomTimerNotifier(ref.watch(startIndicatorPhaseProvider));
@@ -38,7 +38,7 @@ class RandomTimerNotifier with ChangeNotifier {
 
             _startIndicatorPhaseNotifier.nextPhase();
             await Future.delayed(Duration(seconds: 2));
-            _startIndicatorPhaseNotifier.reset();
+            _startIndicatorPhaseNotifier.endCurrentRound();
             return;
           }
 
@@ -54,10 +54,10 @@ class RandomTimerNotifier with ChangeNotifier {
 
             _startIndicatorPhaseNotifier.nextPhase();
             await Future.delayed(Duration(seconds: 2));
-            _startIndicatorPhaseNotifier.reset();
+            _startIndicatorPhaseNotifier.endCurrentRound();
           } else {
             _timerTicks--;
-            print(_timerTicks * _tick / 1000);
+            // print(_timerTicks * _tick / 1000);
           }
         }
 
