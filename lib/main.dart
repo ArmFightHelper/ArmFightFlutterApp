@@ -8,10 +8,12 @@ import 'l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
-  runApp(ProviderScope(child: MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends ConsumerWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
@@ -22,16 +24,16 @@ class MyApp extends ConsumerWidget {
       title: 'ArmFight Helper',
       theme: theme,
       locale: locale,
-      supportedLocales: [
+      supportedLocales: const [
         Locale('en'),
         Locale('ru'),
       ],
-      localizationsDelegates: [
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
       ],
-      home: MainScreen(),
+      home: const MainScreen(),
     );
   }
 }
