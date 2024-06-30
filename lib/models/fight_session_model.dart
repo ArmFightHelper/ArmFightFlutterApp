@@ -1,7 +1,7 @@
 class FightSession {
   final String _id;
-  final String _enemyName;
-  final String _enemyName2;
+  final String _winner;
+  final String _loser;
   final int _rounds;
   final DateTime _date;
 
@@ -12,16 +12,16 @@ class FightSession {
     required int rounds,
     required DateTime date,
   })  : _id = id,
-        _enemyName = enemyName,
-        _enemyName2 = enemyName2,
+        _winner = enemyName,
+        _loser = enemyName2,
         _rounds = rounds,
         _date = date;
 
   get id => _id;
 
-  get enemyName => _enemyName;
+  get winner => _winner;
 
-  get enemyName2 => _enemyName2;
+  get loser => _loser;
 
   get rounds => _rounds;
 
@@ -40,8 +40,8 @@ class FightSession {
   Map<String, dynamic> toJson() {
     return {
       'id': _id,
-      'enemyName': _enemyName,
-      'enemyName2': _enemyName2,
+      'enemyName': _winner,
+      'enemyName2': _loser,
       'rounds': _rounds,
       'date': _date.toIso8601String(),
     };
