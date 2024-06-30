@@ -32,7 +32,7 @@ class RandomTimerNotifier with ChangeNotifier {
             () async {
           if (_timerTicks <= 0) {
             _timer.pause();
-            _timer.reset();
+            _timer.cancel();
             _timerTicks = timePeriod * (1000 ~/ _tick);
             print("GO on $_timerTicks");
 
@@ -50,7 +50,7 @@ class RandomTimerNotifier with ChangeNotifier {
 
             _timerTicks = timePeriod * (1000 ~/ _tick);
             _timer.pause();
-            _timer.reset();
+            _timer.cancel();
 
             _startIndicatorPhaseNotifier.nextPhase();
             await Future.delayed(Duration(seconds: 2));
@@ -66,7 +66,7 @@ class RandomTimerNotifier with ChangeNotifier {
 
   void startTimer() async {
     // TODO: get from settings
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 2));
     _timer.start();
   }
 

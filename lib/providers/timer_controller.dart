@@ -27,6 +27,14 @@ class TimerNotifier with ChangeNotifier {
     // TODO: get from settings
   }
 
+  @override
+  void dispose() {
+    if (_timer.isActive) {
+      _timer.cancel();
+    }
+    super.dispose();
+  }
+
 
   void initializeTimer({required int timePeriod}) async {
     int timeLeft = timePeriod;
