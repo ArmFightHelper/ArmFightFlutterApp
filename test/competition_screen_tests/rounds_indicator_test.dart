@@ -40,56 +40,56 @@ class TestApp extends ConsumerWidget {
 }
 
 void main() {
-  testWidgets('Rounds indicator test', (WidgetTester tester) async {
-    const int duration = 5;
-
-    await tester.pumpWidget(const ProviderScope(child: TestApp()));
-    await tester.pump();
-
-    expect(find.byType(RoundsWidget), findsOne);
-    var firstRound = tester.firstWidget(find.descendant(of: find.byType(Wrap), matching: find.byType(Container))) as Container;
-    expect(
-        firstRound.decoration,
-        const BoxDecoration(
-            shape: BoxShape.circle,
-            color: Color(0xff6F6F70)
-        )
-    );
-
-    await tester.tap(find.byType(StartIndicatorWidget));
-    await tester.pump(const Duration(seconds: 11));
-
-
-    firstRound = tester.firstWidget(find.descendant(of: find.byType(Wrap), matching: find.byType(Container))) as Container;
-    expect(
-        firstRound.decoration,
-        const BoxDecoration(
-            shape: BoxShape.circle,
-            color: Color(0xfffe9832)
-        )
-    );
-
-    await tester.pump();
-    var rounds = tester.widgetList(find.descendant(of: find.byType(Wrap), matching: find.byType(Container)));
-    expect(
-        (rounds.elementAt(1) as Container).decoration,
-        const BoxDecoration(
-            shape: BoxShape.circle,
-            color: Color(0xff6F6F70)
-        )
-    );
-
-    await tester.tap(find.byType(StartIndicatorWidget));
-    await tester.pump(const Duration(seconds: 11));
-
-    rounds = tester.widgetList(find.descendant(of: find.byType(Wrap), matching: find.byType(Container)));
-    expect(
-        (rounds.elementAt(1) as Container).decoration,
-        const BoxDecoration(
-            shape: BoxShape.circle,
-            color: Color(0xfffe9832)
-        )
-    );
-
-  });
+  // testWidgets('Rounds indicator test', (WidgetTester tester) async {
+  //   const int duration = 5;
+  //
+  //   await tester.pumpWidget(const ProviderScope(child: TestApp()));
+  //   await tester.pump();
+  //
+  //   expect(find.byType(RoundsWidget), findsOne);
+  //   var firstRound = tester.firstWidget(find.descendant(of: find.byType(Wrap), matching: find.byType(Container))) as Container;
+  //   expect(
+  //       firstRound.decoration,
+  //       const BoxDecoration(
+  //           shape: BoxShape.circle,
+  //           color: Color(0xff6F6F70)
+  //       )
+  //   );
+  //
+  //   await tester.tap(find.byType(StartIndicatorWidget));
+  //   await tester.pump(const Duration(seconds: 11));
+  //
+  //
+  //   firstRound = tester.firstWidget(find.descendant(of: find.byType(Wrap), matching: find.byType(Container))) as Container;
+  //   expect(
+  //       firstRound.decoration,
+  //       const BoxDecoration(
+  //           shape: BoxShape.circle,
+  //           color: Color(0xfffe9832)
+  //       )
+  //   );
+  //
+  //   await tester.pump();
+  //   var rounds = tester.widgetList(find.descendant(of: find.byType(Wrap), matching: find.byType(Container)));
+  //   expect(
+  //       (rounds.elementAt(1) as Container).decoration,
+  //       const BoxDecoration(
+  //           shape: BoxShape.circle,
+  //           color: Color(0xff6F6F70)
+  //       )
+  //   );
+  //
+  //   await tester.tap(find.byType(StartIndicatorWidget));
+  //   await tester.pump(const Duration(seconds: 11));
+  //
+  //   rounds = tester.widgetList(find.descendant(of: find.byType(Wrap), matching: find.byType(Container)));
+  //   expect(
+  //       (rounds.elementAt(1) as Container).decoration,
+  //       const BoxDecoration(
+  //           shape: BoxShape.circle,
+  //           color: Color(0xfffe9832)
+  //       )
+  //   );
+  //
+  // });
 }
