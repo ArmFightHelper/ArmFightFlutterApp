@@ -23,11 +23,21 @@ class FightController extends ChangeNotifier {
     notifyListeners();
   }
 
-  set enemyName1(String value) => _enemyName1 = value;
+  set enemyName1(String value) {
+    _enemyName1 = value;
+    notifyListeners();
+  }
 
-  set enemyName2(String value) => _enemyName2 = value;
+  set enemyName2(String value) {
+    _enemyName2 = value;
+    notifyListeners();
+  }
 
-  set roundsNum(int value) => _roundsNum = value;
+  set roundsNum(int value) {
+    _roundsNum = value;
+    print('roundsNum updated: $_roundsNum');
+    notifyListeners();
+  }
 
   String get enemyName1 => _enemyName1 ?? "";
 
