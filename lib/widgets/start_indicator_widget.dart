@@ -9,15 +9,32 @@ import 'dart:ui' as ui;
 import 'package:google_fonts/google_fonts.dart';
 import '../constants.dart';
 import 'package:intl/intl.dart';
-
+import 'package:audioplayers/audioplayers.dart';
 
 class StartIndicatorWidget extends ConsumerWidget {
+  static AudioPlayer player = new AudioPlayer();
   const StartIndicatorWidget({super.key});
+
+  void playReadySound() async {
+    await player.play(AssetSource('sounds/ready.mp3'));
+  }
+
+  void playGoSound() async {
+    await player.play(AssetSource('sounds/cs-go-flashbang.mp3'));
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    if (ref.watch(startIndicatorPhaseProvider).currentPhase == Phases.ready) {
+      playReadySound();
+    }
+
+    if (ref.watch(startIndicatorPhaseProvider).currentPhase == Phases.go) {
+      playGoSound();
+    }
+
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         if (ref.watch(startIndicatorPhaseProvider).currentPhase == Phases.start
             && ref.watch(roundsControllerProvider).currentRoundIndex != ref.watch(roundsControllerProvider).roundsNum
         ) {
