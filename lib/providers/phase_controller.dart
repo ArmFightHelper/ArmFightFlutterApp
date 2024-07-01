@@ -43,7 +43,7 @@ class StartIndicatorPhaseNotifier extends ChangeNotifier {
 
   void endCurrentRound() {
     _currentPhaseIndex = 0;
-    _roundsController.endRound(winner: "winner");
+    _roundsController.endRound();
     _safeNotifyListeners();
   }
 
