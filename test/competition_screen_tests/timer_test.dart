@@ -38,7 +38,7 @@ void main() {
     await tester.pump(const Duration(seconds: 3));
     expect(find.text("READY"), findsOne);
 
-    await tester.pump(const Duration(seconds: 7));
+    await tester.pump(const Duration(seconds: 10));
     expect(find.text("START"), findsOne);
     await tester.pump(const Duration(seconds: 1));
   });

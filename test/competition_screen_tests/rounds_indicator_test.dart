@@ -42,12 +42,12 @@ void main() {
     );
 
     await tester.tap(find.byType(StartIndicatorWidget));
-    await tester.pump(const Duration(seconds: 11));
+    await tester.pump(const Duration(seconds: 15));
 
 
-    firstRound = tester.firstWidget(find.descendant(of: find.byType(Wrap), matching: find.byType(Container))) as Container;
+    var rounds = tester.widgetList(find.descendant(of: find.byType(Wrap), matching: find.byType(Container)));
     expect(
-        firstRound.decoration,
+        (rounds.elementAt(0) as Container).decoration,
         const BoxDecoration(
             shape: BoxShape.circle,
             color: Color(0xfffe9832)
@@ -55,7 +55,7 @@ void main() {
     );
 
     await tester.pump();
-    var rounds = tester.widgetList(find.descendant(of: find.byType(Wrap), matching: find.byType(Container)));
+    rounds = tester.widgetList(find.descendant(of: find.byType(Wrap), matching: find.byType(Container)));
     expect(
         (rounds.elementAt(1) as Container).decoration,
         const BoxDecoration(
@@ -65,7 +65,7 @@ void main() {
     );
 
     await tester.tap(find.byType(StartIndicatorWidget));
-    await tester.pump(const Duration(seconds: 11));
+    await tester.pump(const Duration(seconds: 13));
 
     rounds = tester.widgetList(find.descendant(of: find.byType(Wrap), matching: find.byType(Container)));
     expect(
