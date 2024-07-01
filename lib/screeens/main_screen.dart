@@ -3,10 +3,12 @@ import 'package:arm_fight_helper/screeens/training_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../providers/history_controller.dart';
 import 'history_screen.dart';
-import 'package:arm_fight_helper/theme.dart'; 
+import 'package:arm_fight_helper/theme.dart';
 import 'package:arm_fight_helper/l10n/app_localizations.dart';
 import 'package:arm_fight_helper/language_notifier.dart';
+import 'package:arm_fight_helper/providers/fight_controller.dart';
 
 class MainScreen extends ConsumerWidget {
   const MainScreen({super.key});
@@ -111,7 +113,7 @@ class MainScreen extends ConsumerWidget {
                     );
                   },
                   child: Text(
-                  localizations.translate("history"),
+                    localizations.translate("history"),
                     style: TextStyle(
                       // fontWeight: FontWeight.bold,
                       fontSize: 20,
@@ -145,31 +147,100 @@ class MainScreen extends ConsumerWidget {
   }
 }
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context);
+    final fightController = ref.watch(fightControllerProvider);
     return Container(
       height: MediaQuery.of(context).size.height / 2,
       child: Center(
-
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(localizations.translate("settings"),),
+            Text(
+              localizations.translate("settings"),
+            ),
             SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(1.0),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints.tight(const Size(127, 80)),
+                    child: TextFormField(
+                      onChanged: (String? value) {
+                        fightController.enemyName1 = value ?? "";
+                      },
+                      decoration: InputDecoration(
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                        labelText: "Name",
+                        labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
+                      ),
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.done,
+                    ),
+                  ),
+                ),
+                ConstrainedBox(
+                  constraints: BoxConstraints.tight(const Size(127, 80)),
+                  child: TextFormField(
+                    onChanged: (String? value) {
+                      fightController.enemyName2 = value ?? "";
+                    },
+                    decoration: InputDecoration(
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                      labelText: localizations.translate("Name"),
+                      labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
+                    ),
+                    keyboardType: TextInputType.text,
+                    textInputAction: TextInputAction.done,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            ConstrainedBox(
+              constraints: BoxConstraints.tight(const Size(127, 80)),
+              child: TextFormField(
+                onChanged: (String? value) {
+                  ref.read(fightControllerProvider).roundsNum = int.tryParse(value ?? "") ?? 0;
+                },
+                decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  labelText: localizations.translate("Rounds"),
+                  labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
+                ),
+                keyboardType: TextInputType.number,
+                textInputAction: TextInputAction.done,
+              ),
+            ),
             ElevatedButton(
               onPressed: () {
+                // fightController.saveFightData();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const CompetitionScreen()),
+                  MaterialPageRoute(builder: (context) => CompetitionScreen()),
                 );
               },
-              child: Text(localizations.translate("go to competition"),
-),
+              child: Text(
+                localizations.translate("go to competition"),
+              ),
             ),
           ],
-
         ),
       ),
     );
@@ -182,12 +253,13 @@ class TrainingSettingsScreen extends StatefulWidget {
   @override
   _TrainingSettingsScreenState createState() => _TrainingSettingsScreenState();
 }
+
 class _TrainingSettingsScreenState extends State<TrainingSettingsScreen>{
   final TextEditingController minutesController = TextEditingController() ..text= '01';
   final TextEditingController secondsController = TextEditingController() ..text= '00';
 
   @override
-  void dispose(){
+  void dispose() {
     minutesController.dispose();
     secondsController.dispose();
     super.dispose();
@@ -229,12 +301,8 @@ class _TrainingSettingsScreenState extends State<TrainingSettingsScreen>{
                 inputFormatters: [
                   TimeInputFormatter()
                 ],
-              ), width: 55,
-                height: 50,
+                mainAxisAlignment: MainAxisAlignment.center,
               ),
-            ],
-              mainAxisAlignment: MainAxisAlignment.center,
-            ),
               width: 150,
               height: 50,
             ),
@@ -243,39 +311,38 @@ class _TrainingSettingsScreenState extends State<TrainingSettingsScreen>{
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => TrainingScreen(time:
-                    int.parse(minutesController.text)*60 + int.parse(secondsController.text)
-                    ,)),
+                  MaterialPageRoute(
+                      builder: (context) => TrainingScreen(
+                            time: int.parse(minutesController.text) * 60 +
+                                int.parse(secondsController.text),
+                          )),
                 );
               },
-              child: Text(localizations.translate("go to training"),
+              child: Text(
+                localizations.translate("go to training"),
               ),
             ),
           ],
-
         ),
       ),
     );
   }
 }
 
-class TimeInputFormatter extends TextInputFormatter{
+class TimeInputFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     final digitsOnly = newValue.text.replaceAll(RegExp(r'[^\d]+'), '');
     int val = int.parse(digitsOnly);
-    if(val > 59) val = 59;
-    if(val < 0) val = 0;
+    if (val > 59) val = 59;
+    if (val < 0) val = 0;
     final time = val.toString().padLeft(2, '0');
     return TextEditingValue(
-        text: time,
+      text: time,
       selection: TextSelection.collapsed(offset: time.length),
     );
   }
-  
 }
-
-
 
 final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeData>((ref) {
   return ThemeNotifier();

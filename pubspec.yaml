@@ -18,6 +18,8 @@ dependencies:
   google_fonts: ^6.2.1
   pausable_timer: ^3.1.0+3
   intl: ^0.19.0
+  shared_preferences: ^2.2.3
+  audioplayers: ^6.0.0
 
 dev_dependencies:
   flutter_test:
@@ -29,3 +31,6 @@ flutter:
   assets:
    - assets/lang/en.json
    - assets/lang/ru.json
+   - assets/icons/
+   - assets/sounds/cs-go-flashbang.mp3
+   - assets/sounds/ready.mp3

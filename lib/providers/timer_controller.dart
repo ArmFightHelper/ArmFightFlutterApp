@@ -34,12 +34,21 @@ class TimerNotifier with ChangeNotifier {
     // TODO: get from settings
   }
 
+  @override
+  void dispose() {
+    if (_timer.isActive) {
+      _timer.cancel();
+    }
+    super.dispose();
+  }
+
 
   void initializeTimer({required int timePeriod}) async {
     int timeLeft = timePeriod;
     _timerValue = timePeriod;
     _totalTime = timePeriod;
 
+    // TOD0: increase prep phase
     _timer = PausableTimer.periodic(
         const Duration(seconds: 1),
             () {

@@ -1,9 +1,11 @@
+import 'package:arm_fight_helper/providers/fight_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/round_model.dart';
 
 final roundsControllerProvider = ChangeNotifierProvider<RoundsController>((ref) {
-  return RoundsController(roundsNum: 2);
+  int num = ref.watch(fightControllerProvider).roundsNum == 0 ? 2 : ref.watch(fightControllerProvider).roundsNum;
+  return RoundsController(roundsNum: num);
 });
 
 class RoundsController extends ChangeNotifier {
