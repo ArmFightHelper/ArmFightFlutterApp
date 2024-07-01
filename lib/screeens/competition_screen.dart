@@ -23,7 +23,7 @@ class CompetitionScreen extends ConsumerWidget {
     final localizations = AppLocalizations.of(context);
 
     // Check if the current phase is "GO" and show dialog
-    if (startIndicatorPhaseNotifier.currentPhase == Phases.go) {
+    if (startIndicatorPhaseNotifier.currentPhase == Phases.start && ref.watch(roundsControllerProvider).currentRoundIndex != 0) {
       _showWinnerDialog(context);
     }
 

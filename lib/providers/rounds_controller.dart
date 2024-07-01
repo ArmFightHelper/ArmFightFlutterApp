@@ -23,7 +23,7 @@ class RoundsController extends ChangeNotifier {
   int get roundsNum => _rounds.length;
 
   // TODO: initialize rounds with constructor (parse roundsNum from settings)
-
+  List<Round> get allRounds => _rounds;
   Round getRound(int index) {
     return _rounds[index];
   }
@@ -36,14 +36,15 @@ class RoundsController extends ChangeNotifier {
   //   }
   // }
 
-  void endRound({required String winner}) {
+  void endRound() {
     _rounds[_currentRoundIndex].isEnded = true;
-    _rounds[_currentRoundIndex].winner = winner;
     _currentRoundIndex++;
     notifyListeners();
   }
-
-
+  void setWinner(String winner){
+    _rounds[_currentRoundIndex-1].winner = winner;
+  }
+  
 
 
 }
