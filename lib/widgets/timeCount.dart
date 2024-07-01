@@ -17,9 +17,7 @@ class TimeCountWidget extends ConsumerWidget{
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //ref.read(timerProvider).startTimer();
-    //ref.watch(timerProvider).timeLeft;
-    ref.read(currentTimeProvider).startTimer();
+    //ref.read(currentTimeProvider).startTimer();
     ref.watch(currentTimeProvider).timeLeft;
     //ref.read(timerProvider).initializeCountDown(timePeriod: timeLeft);
     return Text(

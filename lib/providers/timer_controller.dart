@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:arm_fight_helper/providers/random_timer_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -64,24 +66,37 @@ class TimerNotifier with ChangeNotifier {
     int timeLeft = timePeriod;
     _timerValue = timePeriod;
     _totalTime = timePeriod;
+    int interval = 3;
+    int randomMoment = Random().nextInt(10)+3;
 
     _timer = PausableTimer.periodic(
         const Duration(seconds: 1),
             () {
           if (timeLeft == 0) {
             _timer.pause();
-            _timer.reset();
+
+            /*_timer.reset();
             timeLeft = timePeriod;
-            _timerValue = timePeriod;
+            _timerValue = timePeriod;*/
 
             //_startIndicatorPhaseNotifier.nextPhase();
             //_randomTimerNotifier.startTimer();
             return;
             // Proceed to next phase
           }
+
           timeLeft--;
-          //_totalTime++;
           _timerValue = timeLeft;
+
+          int moment = _totalTime - _timerValue;
+          if(moment == randomMoment){
+            _startIndicatorPhaseNotifier.movePhase(1);
+          }
+          if(moment == randomMoment+interval){
+            randomMoment += Random().nextInt(10) + 5;
+            _startIndicatorPhaseNotifier.movePhase(-1);
+          }
+
           notifyListeners();
         }
     );
