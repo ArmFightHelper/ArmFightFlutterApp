@@ -301,8 +301,12 @@ class _TrainingSettingsScreenState extends State<TrainingSettingsScreen>{
                 inputFormatters: [
                   TimeInputFormatter()
                 ],
-                mainAxisAlignment: MainAxisAlignment.center,
+              ), width: 55,
+                height: 50,
               ),
+            ],
+              mainAxisAlignment: MainAxisAlignment.center,
+            ),
               width: 150,
               height: 50,
             ),
