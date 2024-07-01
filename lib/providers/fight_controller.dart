@@ -23,11 +23,20 @@ class FightController extends ChangeNotifier {
     notifyListeners();
   }
 
-  set enemyName1(String value) => _enemyName1 = value;
+  set enemyName1(String value) {
+    _enemyName1 = value;
+    notifyListeners();
+  }
 
-  set enemyName2(String value) => _enemyName2 = value;
+  set enemyName2(String value){
+    _enemyName2 = value;
+    notifyListeners();
+  }
 
-  set roundsNum(int value) => _roundsNum = value;
+  set roundsNum(int value) {
+    _roundsNum = value;
+    notifyListeners();
+  }
 
   String get enemyName1 => _enemyName1 ?? "";
 
@@ -35,13 +44,22 @@ class FightController extends ChangeNotifier {
 
   int get roundsNum => _roundsNum ?? 0;
 
-  void saveFightData() {
-    historyController.addFightSession(FightSession(
-      date: DateTime.now(),
-      winnerName: _enemyName1!,
-      loserName: _enemyName2!,
-      rounds: _roundsNum!,
-    ));
-    notifyListeners();
+  void saveFightData({ required bool isEnemy1Win}) {
+    if (isEnemy1Win) {
+      historyController.addFightSession(FightSession(
+        winnerName: _enemyName1!,
+        loserName: _enemyName2!,
+        rounds: _roundsNum!,
+        date: DateTime.now(),
+      ));
+    } else {
+      historyController.addFightSession(FightSession(
+        winnerName: _enemyName2!,
+        loserName: _enemyName1!,
+        rounds: _roundsNum!,
+        date: DateTime.now(),
+      ));
+    }
+    reset();
   }
 }
