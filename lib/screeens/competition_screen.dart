@@ -11,7 +11,7 @@ import 'package:arm_fight_helper/widgets/start_indicator_widget.dart';
 import '../l10n/app_localizations.dart';
 import '../providers/fight_controller.dart';
 import 'package:arm_fight_helper/providers/phase_controller.dart';
-import 'package:arm_fight_helper/widgets/dialogue_window.dart';
+import 'package:arm_fight_helper/widgets/winner_choise_widget.dart';
 import 'package:arm_fight_helper/constants.dart';
 
 class CompetitionScreen extends ConsumerWidget {
