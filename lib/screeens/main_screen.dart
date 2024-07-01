@@ -215,7 +215,7 @@ class SettingsScreen extends ConsumerWidget {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
-                        labelText: localizations.translate("name"),
+                          labelText: localizations.translate("name"),
                         labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
                       ),
                       keyboardType: TextInputType.text,
@@ -243,7 +243,7 @@ class SettingsScreen extends ConsumerWidget {
                         color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
-                    labelText: localizations.translate("Rounds"),
+                    labelText: localizations.translate("rounds"),
                     labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
                   ),
                   keyboardType: TextInputType.number,
@@ -252,34 +252,29 @@ class SettingsScreen extends ConsumerWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  // fightController.saveFightData();
-                  if (ref.watch(fightControllerProvider).roundsNum % 2 == 0) {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text(
-                              "Select odd number of rounds",
-                              style: Theme.of(context).textTheme.bodyMedium,
-                            ),
-                          );
-                        });
+                  if (!_formKey.currentState!.validate()) {
                     return;
                   }
-                  if (!_formKey.currentState!.validate()) {
-                    // If the form is valid, display a snackbar.
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing Data')),
-                    );
-                  } else {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CompetitionScreen()),
-                    );
+                  if (ref.watch(fightControllerProvider).roundsNum % 2 == 0) {
+                    showDialog(context: context, builder: (context) {
+                      return AlertDialog(
+                        title: Text(
+                          "Select odd number of rounds",
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      );
+
+                    });
+                    return;
                   }
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CompetitionScreen()),
+                  );
                 },
                 child: Text(
-                  localizations.translate("go to competition"),
+                  localizations.translate("go_to_competition"),
                 ),
               ),
             ],
@@ -298,8 +293,8 @@ class TrainingSettingsScreen extends StatefulWidget {
 }
 
 class _TrainingSettingsScreenState extends State<TrainingSettingsScreen> {
-  final TextEditingController minutesController = TextEditingController()..text = '01';
-  final TextEditingController secondsController = TextEditingController()..text = '00';
+  final TextEditingController minutesController = TextEditingController();
+  final TextEditingController secondsController = TextEditingController();
 
   @override
   void dispose() {
@@ -318,7 +313,7 @@ class _TrainingSettingsScreenState extends State<TrainingSettingsScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              localizations.translate("choose_period"),
+              localizations.translate("Choose period"),
             ),
             SizedBox(
               child: Row(
