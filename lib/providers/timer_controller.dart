@@ -41,6 +41,7 @@ class TimerNotifier with ChangeNotifier {
     _timerValue = timePeriod;
     _totalTime = timePeriod;
 
+    // TOD0: increase prep phase
     _timer = PausableTimer.periodic(
         const Duration(seconds: 1),
             () {

@@ -8,7 +8,7 @@ class RoundsWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    int roundsNum = 2;
+    int roundsNum = ref.read(roundsControllerProvider).roundsNum;
 
     // ref.read(roundsControllerProvider).initialize(roundsNum: roundsNum);
 
