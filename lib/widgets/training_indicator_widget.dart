@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:arm_fight_helper/providers/phase_controller.dart';
 import 'package:arm_fight_helper/providers/rounds_controller.dart';
 import 'package:arm_fight_helper/providers/timer_controller.dart';
+import 'package:arm_fight_helper/widgets/training_summary_widget.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,7 +19,7 @@ class TrainingIndicatorWidget extends ConsumerWidget {
   final ChangeNotifierProvider<TimerNotifier> timer;
 
   // !!!ВНИМАНИЕ КОСТЫЛЬ!!! НЕ ТРОГАТЬ ПО ВОЗМОЖНОСТИ
-  Phases? prevPhase = Phases.start;
+  static late Phases? prevPhase = Phases.start;
 
   TrainingIndicatorWidget({super.key, required this.phase, required this.timer});
 
@@ -47,6 +48,21 @@ class TrainingIndicatorWidget extends ConsumerWidget {
       playGoSound();
     }
     prevPhase = ref.watch(phase).currentPhase;
+
+
+    if (ref.read(timer).timeLeft == 0) {
+      Future.delayed(
+          Duration.zero,
+              () => showDialog(
+                  context: context,
+                  builder: (context) => TrainingSummaryWidget(
+                    ref.watch(timer).totalTime,
+                    phase,
+                    timer
+                  )
+              )
+      );
+    }
 
     return GestureDetector(
       onTap: () {
