@@ -10,7 +10,7 @@ import 'package:arm_fight_helper/widgets/start_indicator_widget.dart';
 import '../l10n/app_localizations.dart';
 
 class TrainingScreen extends ConsumerWidget {
-  int time;
+  final int time;
   TrainingScreen({super.key, required this.time});
 
 

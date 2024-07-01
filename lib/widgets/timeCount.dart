@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TimeCountWidget extends ConsumerWidget{
-  int timeLeft;
+  final int timeLeft;
   TimeCountWidget({super.key, required this.timeLeft});
 
 
