@@ -183,8 +183,8 @@ class TrainingSettingsScreen extends StatefulWidget {
   _TrainingSettingsScreenState createState() => _TrainingSettingsScreenState();
 }
 class _TrainingSettingsScreenState extends State<TrainingSettingsScreen>{
-  final TextEditingController minutesController = TextEditingController();
-  final TextEditingController secondsController = TextEditingController();
+  final TextEditingController minutesController = TextEditingController() ..text= '01';
+  final TextEditingController secondsController = TextEditingController() ..text= '00';
 
   @override
   void dispose(){
@@ -205,6 +205,7 @@ class _TrainingSettingsScreenState extends State<TrainingSettingsScreen>{
             Text(localizations.translate("Choose period"),),
             SizedBox(child:  Row(children: [
               SizedBox(child:  TextField(
+
                 controller: minutesController,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
