@@ -1,8 +1,11 @@
+import 'package:arm_fight_helper/l10n/app_localizations.dart';
+import 'package:arm_fight_helper/language_notifier.dart';
 import 'package:arm_fight_helper/screeens/competition_screen.dart';
 import 'package:arm_fight_helper/screeens/main_screen.dart';
 import 'package:arm_fight_helper/widgets/rounds_indicator_widget.dart';
 import 'package:arm_fight_helper/widgets/start_indicator_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,10 +15,22 @@ class TestApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = ref.watch(themeProvider);
+    final locale = ref.watch(languageProvider);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: theme,
+      locale: locale,
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ru'),
+      ],
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       title: 'ArmFight Helper',
       home: const CompetitionScreen(),
     );
@@ -37,7 +52,7 @@ void main() {
         firstRound.decoration,
         const BoxDecoration(
             shape: BoxShape.circle,
-            color: Color(0xffD8D8D8)
+            color: Color(0xff6F6F70)
         )
     );
 
@@ -60,7 +75,7 @@ void main() {
         (rounds.elementAt(1) as Container).decoration,
         const BoxDecoration(
             shape: BoxShape.circle,
-            color: Color(0xffD8D8D8)
+            color: Color(0xff6F6F70)
         )
     );
 

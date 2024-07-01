@@ -179,7 +179,7 @@ class SettingsScreen extends ConsumerWidget {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
-                        labelText: "Name",
+                        labelText: localizations.translate("name"),
                         labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
                       ),
                       keyboardType: TextInputType.text,
@@ -199,7 +199,7 @@ class SettingsScreen extends ConsumerWidget {
                           color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
-                      labelText: localizations.translate("Name"),
+                      labelText: localizations.translate("name"),
                       labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
                     ),
                     keyboardType: TextInputType.text,
@@ -221,7 +221,7 @@ class SettingsScreen extends ConsumerWidget {
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   ),
-                  labelText: localizations.translate("Rounds"),
+                  labelText: localizations.translate("rounds"),
                   labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
                 ),
                 keyboardType: TextInputType.number,
@@ -237,7 +237,7 @@ class SettingsScreen extends ConsumerWidget {
                 );
               },
               child: Text(
-                localizations.translate("go to competition"),
+                localizations.translate("go_to_competition"),
               ),
             ),
           ],
@@ -274,7 +274,7 @@ class _TrainingSettingsScreenState extends State<TrainingSettingsScreen>{
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(localizations.translate("Choose period"),),
+            Text(localizations.translate("choose_period"),),
             SizedBox(child:  Row(children: [
               SizedBox(child:  TextField(
 
@@ -323,7 +323,7 @@ class _TrainingSettingsScreenState extends State<TrainingSettingsScreen>{
                 );
               },
               child: Text(
-                localizations.translate("go to training"),
+                localizations.translate("go_to_training"),
               ),
             ),
           ],
@@ -353,7 +353,7 @@ final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeData>((ref) {
 });
 
 class ThemeNotifier extends StateNotifier<ThemeData> {
-  ThemeNotifier() : super(buildLightTheme());
+  ThemeNotifier() : super(buildDarkTheme());
 
   void toggleTheme() {
     state = state.brightness == Brightness.light ? buildDarkTheme() : buildLightTheme();

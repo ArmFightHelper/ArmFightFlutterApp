@@ -62,7 +62,7 @@ class TrainingScreen extends ConsumerWidget {
         ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
-          localization.translate("Training"),
+          localization.translate("training"),
           style: GoogleFonts.inter(
               textStyle: Theme.of(context).textTheme.headlineMedium
           ),

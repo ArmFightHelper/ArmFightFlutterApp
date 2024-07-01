@@ -8,6 +8,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:arm_fight_helper/widgets/start_indicator_widget.dart';
+import '../l10n/app_localizations.dart';
 import '../providers/fight_controller.dart';
 import 'package:arm_fight_helper/providers/phase_controller.dart';
 import 'package:arm_fight_helper/widgets/dialogue_window.dart';
@@ -19,6 +20,7 @@ class CompetitionScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final startIndicatorPhaseNotifier = ref.watch(startIndicatorPhaseProvider);
+    final localizations = AppLocalizations.of(context);
 
     // Check if the current phase is "GO" and show dialog
     if (startIndicatorPhaseNotifier.currentPhase == Phases.go) {
@@ -37,7 +39,7 @@ class CompetitionScreen extends ConsumerWidget {
         ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
-          "Competition",
+          localizations.translate("competition"),
           style: GoogleFonts.inter(
             textStyle: Theme.of(context).textTheme.headlineMedium,
           ),
