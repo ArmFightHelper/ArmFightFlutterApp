@@ -148,6 +148,8 @@ class MainScreen extends ConsumerWidget {
 }
 
 class SettingsScreen extends ConsumerWidget {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context);
@@ -155,23 +157,57 @@ class SettingsScreen extends ConsumerWidget {
     return Container(
       height: MediaQuery.of(context).size.height / 2,
       child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              localizations.translate("settings"),
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(1.0),
-                  child: ConstrainedBox(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                localizations.translate("settings"),
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(1.0),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints.tight(const Size(127, 80)),
+                      child: TextFormField(
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Wrong value';
+                          }
+                          return null;
+                        },
+                        onChanged: (String? value) {
+                          fightController.enemyName1 = value ?? "";
+                        },
+                        decoration: InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                          labelText: "Name",
+                          labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
+                        ),
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.done,
+                      ),
+                    ),
+                  ),
+                  ConstrainedBox(
                     constraints: BoxConstraints.tight(const Size(127, 80)),
                     child: TextFormField(
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Wrong value';
+                        }
+                        return null;
+                      },
                       onChanged: (String? value) {
-                        fightController.enemyName1 = value ?? "";
+                        fightController.enemyName2 = value ?? "";
                       },
                       decoration: InputDecoration(
                         enabledBorder: UnderlineInputBorder(
@@ -186,34 +222,50 @@ class SettingsScreen extends ConsumerWidget {
                       textInputAction: TextInputAction.done,
                     ),
                   ),
-                ),
-                ConstrainedBox(
-                  constraints: BoxConstraints.tight(const Size(127, 80)),
-                  child: TextFormField(
-                    onChanged: (String? value) {
-                      fightController.enemyName2 = value ?? "";
-                    },
-                    decoration: InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              ConstrainedBox(
+                constraints: BoxConstraints.tight(const Size(127, 80)),
+                child: TextFormField(
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty || int.tryParse(value) == null) {
+                      return 'Enter number';
+                    }
+                    return null;
+                  },
+                  onChanged: (String? value) {
+                    ref.read(fightControllerProvider).roundsNum = int.tryParse(value ?? "") ?? 0;
+                  },
+                  decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                       labelText: localizations.translate("name"),
                       labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
                     ),
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.done,
+                    labelText: localizations.translate("Rounds"),
+                    labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
                   ),
+                  keyboardType: TextInputType.number,
+                  textInputAction: TextInputAction.done,
                 ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            ConstrainedBox(
-              constraints: BoxConstraints.tight(const Size(127, 80)),
-              child: TextFormField(
-                onChanged: (String? value) {
-                  ref.read(fightControllerProvider).roundsNum = int.tryParse(value ?? "") ?? 0;
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  // fightController.saveFightData();
+                  if (!_formKey.currentState!.validate()) {
+                    // If the form is valid, display a snackbar.
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Processing Data')),
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CompetitionScreen()),
+                    );
+                  }
                 },
                 decoration: InputDecoration(
                   enabledBorder: UnderlineInputBorder(
@@ -224,8 +276,6 @@ class SettingsScreen extends ConsumerWidget {
                   labelText: localizations.translate("rounds"),
                   labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
                 ),
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.done,
               ),
             ),
             ElevatedButton(
