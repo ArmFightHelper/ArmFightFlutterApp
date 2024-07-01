@@ -189,7 +189,7 @@ class SettingsScreen extends ConsumerWidget {
                               color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
-                          labelText: "Name",
+                          labelText: localizations.translate("name"),
                           labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
                         ),
                         keyboardType: TextInputType.text,
@@ -215,7 +215,7 @@ class SettingsScreen extends ConsumerWidget {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
-                        labelText: localizations.translate("Name"),
+                        labelText: localizations.translate("name"),
                         labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
                       ),
                       keyboardType: TextInputType.text,
@@ -253,6 +253,19 @@ class SettingsScreen extends ConsumerWidget {
               ElevatedButton(
                 onPressed: () {
                   // fightController.saveFightData();
+                  if (ref.watch(fightControllerProvider).roundsNum % 2 == 0) {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: Text(
+                              "Select odd number of rounds",
+                              style: Theme.of(context).textTheme.bodyMedium,
+                            ),
+                          );
+                        });
+                    return;
+                  }
                   if (!_formKey.currentState!.validate()) {
                     // If the form is valid, display a snackbar.
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -285,8 +298,8 @@ class TrainingSettingsScreen extends StatefulWidget {
 }
 
 class _TrainingSettingsScreenState extends State<TrainingSettingsScreen> {
-  final TextEditingController minutesController = TextEditingController();
-  final TextEditingController secondsController = TextEditingController();
+  final TextEditingController minutesController = TextEditingController()..text = '01';
+  final TextEditingController secondsController = TextEditingController()..text = '00';
 
   @override
   void dispose() {
@@ -305,7 +318,7 @@ class _TrainingSettingsScreenState extends State<TrainingSettingsScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              localizations.translate("Choose period"),
+              localizations.translate("choose_period"),
             ),
             SizedBox(
               child: Row(
@@ -361,7 +374,7 @@ class _TrainingSettingsScreenState extends State<TrainingSettingsScreen> {
                 );
               },
               child: Text(
-                localizations.translate("go to training"),
+                localizations.translate("go_to_training"),
               ),
             ),
           ],
@@ -391,7 +404,7 @@ final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeData>((ref) {
 });
 
 class ThemeNotifier extends StateNotifier<ThemeData> {
-  ThemeNotifier() : super(buildLightTheme());
+  ThemeNotifier() : super(buildDarkTheme());
 
   void toggleTheme() {
     state = state.brightness == Brightness.light ? buildDarkTheme() : buildLightTheme();

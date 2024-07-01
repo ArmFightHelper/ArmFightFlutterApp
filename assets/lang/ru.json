@@ -5,5 +5,11 @@
     "training": "Тренировочный",
     "history": "История поединков",
     "settings": "Настройки",
-    "go_to_competition": "К соревованию"
+    "go_to_competition": "К соревованию",
+    "go_to_training": "Начать тренировку",
+    "training_summary": "Тренировка завершена",
+    "total_time": "Время тренировки",
+    "choose_period": "Время тренировки",
+    "name": "Имя",
+    "rounds": "Раунды"
   }
