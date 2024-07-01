@@ -173,7 +173,6 @@ class SettingsScreen extends ConsumerWidget {
                       onChanged: (String? value) {
                         fightController.enemyName1 = value ?? "";
                       },
-                      controller: TextEditingController(),
                       decoration: InputDecoration(
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
