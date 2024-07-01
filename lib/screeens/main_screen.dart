@@ -230,17 +230,21 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: () {
-                fightController.saveFightData();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const CompetitionScreen()),
-                );
-              },
-              child: Text(
-                localizations.translate("go to competition"),
-              ),
-            ),
+  onPressed: () {
+    final enemyName1 = fightController.enemyName1;
+    final enemyName2 = fightController.enemyName2;
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CompetitionScreen(
+          enemyName1: enemyName1,
+          enemyName2: enemyName2,
+        ),
+      ),
+    );
+  },
+  child: Text(localizations.translate("go to competition")),
+),
           ],
         ),
       ),

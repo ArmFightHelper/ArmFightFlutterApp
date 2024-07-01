@@ -12,6 +12,7 @@ class StartIndicatorPhaseNotifier extends ChangeNotifier {
   int _currentPhaseIndex = 0;
   final RoundsController _roundsController;
   bool _isDisposed = false;
+  VoidCallback? onGoPhaseReached;
 
   get currentPhase => phasesSequence[_currentPhaseIndex];
 
@@ -27,16 +28,18 @@ class StartIndicatorPhaseNotifier extends ChangeNotifier {
     if (_currentPhaseIndex + 1 >= phasesSequence.length) {
       throw ErrorDescription("Next phase doesn't exist");
     }
-
     _currentPhaseIndex++;
     _safeNotifyListeners();
+
+    if (currentPhase == Phases.go && onGoPhaseReached != null) {
+      onGoPhaseReached!();
+    }
   }
 
   void previousPhase() {
     if (_currentPhaseIndex - 1 < 0) {
       throw ErrorDescription("Previous phase doesn't exist");
     }
-
     _currentPhaseIndex--;
     _safeNotifyListeners();
   }
