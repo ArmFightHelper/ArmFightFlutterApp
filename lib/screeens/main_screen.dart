@@ -214,7 +214,7 @@ class SettingsScreen extends ConsumerWidget {
               constraints: BoxConstraints.tight(const Size(127, 80)),
               child: TextFormField(
                 onChanged: (String? value) {
-                  fightController.roundsNum = int.tryParse(value ?? "") ?? 0;
+                  ref.read(fightControllerProvider).roundsNum = int.tryParse(value ?? "") ?? 0;
                 },
                 decoration: InputDecoration(
                   enabledBorder: UnderlineInputBorder(
@@ -231,10 +231,10 @@ class SettingsScreen extends ConsumerWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                fightController.saveFightData();
+                // fightController.saveFightData();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const CompetitionScreen()),
+                  MaterialPageRoute(builder: (context) => CompetitionScreen()),
                 );
               },
               child: Text(
