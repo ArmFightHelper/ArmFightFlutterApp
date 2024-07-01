@@ -52,13 +52,17 @@ class WinnerDialog extends ConsumerWidget{
                         }
                       }
                       if (firstEnemyWins > secondEnemyWins){
+                        ref.read(startIndicatorPhaseProvider).resetRound();
+                        ref.read(timerProvider).stopTimer();
                         fightController.saveFightData(isEnemy1Win: true);
                         Navigator.of(context).pop();
-                        Navigator.popUntil(context, ModalRoute.withName("/"));
+                        Navigator.of(context).pop();
                       } else {
+                        ref.read(startIndicatorPhaseProvider).resetRound();
+                        ref.read(timerProvider).stopTimer();
                         fightController.saveFightData(isEnemy1Win: false);
                         Navigator.of(context).pop();
-                        Navigator.popUntil(context, ModalRoute.withName("/"));
+                        Navigator.of(context).pop();
                       }
                       }
                       
