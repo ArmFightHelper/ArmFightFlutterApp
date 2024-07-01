@@ -18,18 +18,8 @@ class HistoryScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                TextButton(
-                    onPressed: () {
-                      historyController.addFightSession(FightSession(
-                          id: "ffafs",
-                          enemyName: "REsere",
-                          enemyName2: "refsf",
-                          rounds: 3,
-                          date: DateTime.now()));
-                    },
-                    child: Text("Add Sesion")),
-                const Center(
+              const Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Center(
                   child: Text(
                     'Fight History',
                     style: TextStyle(
@@ -38,6 +28,7 @@ class HistoryScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
+                SizedBox(height: 80)
               ]),
               Expanded(
                 child: ListView.builder(

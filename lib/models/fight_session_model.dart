@@ -1,23 +1,18 @@
 class FightSession {
-  final String _id;
   final String _winner;
   final String _loser;
   final int _rounds;
   final DateTime _date;
 
   FightSession({
-    required String id,
-    required String enemyName,
-    required String enemyName2,
+    required String winnerName,
+    required String loserName,
     required int rounds,
     required DateTime date,
-  })  : _id = id,
-        _winner = enemyName,
-        _loser = enemyName2,
+  })  : _winner = winnerName,
+        _loser = loserName,
         _rounds = rounds,
         _date = date;
-
-  get id => _id;
 
   get winner => _winner;
 
@@ -29,9 +24,8 @@ class FightSession {
 
   factory FightSession.fromJson(Map<String, dynamic> json) {
     return FightSession(
-      id: json['id'],
-      enemyName: json['enemyName'],
-      enemyName2: json['enemyName2'],
+      winnerName: json['enemyName'],
+      loserName: json['enemyName2'],
       rounds: json['rounds'],
       date: DateTime.parse(json['date']),
     );
@@ -39,7 +33,6 @@ class FightSession {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': _id,
       'enemyName': _winner,
       'enemyName2': _loser,
       'rounds': _rounds,
