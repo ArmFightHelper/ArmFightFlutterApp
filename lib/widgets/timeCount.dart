@@ -9,7 +9,7 @@ import '../providers/random_timer_controller.dart';
 
 class TimeCountWidget extends ConsumerWidget{
   //int timeLeft;
-  late ChangeNotifierProvider<TimerNotifier> currentTimeProvider;
+  final ChangeNotifierProvider<TimerNotifier> currentTimeProvider;
   TimeCountWidget({super.key, required this.currentTimeProvider});
 
 

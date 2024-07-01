@@ -5,5 +5,7 @@
     "training": "Training",
     "history": "History",
     "settings": "Settings Screen",
-    "go_to_competition": "Go to Competition"
+    "go_to_competition": "Go to Competition",
+    "training_summary": "Training completed",
+    "total_time": "Total time"
   }

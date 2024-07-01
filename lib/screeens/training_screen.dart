@@ -1,3 +1,4 @@
+import 'package:arm_fight_helper/theme.dart';
 import 'package:arm_fight_helper/widgets/restart_button_widget.dart';
 import 'package:arm_fight_helper/widgets/rounds_indicator_widget.dart';
 import 'package:arm_fight_helper/widgets/timeCount.dart';
@@ -51,6 +52,14 @@ class TrainingScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Theme.of(context).textTheme.headlineLarge?.color),
+          onPressed: () {
+            ref.read(currentProvider).stopTimer();
+            ref.read(localStartIndicatorPhaseProvider).resetRound();
+            Navigator.of(context).pop();
+          },
+        ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: Text(
           localization.translate("Training"),

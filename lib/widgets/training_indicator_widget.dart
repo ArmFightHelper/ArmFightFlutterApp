@@ -2,6 +2,8 @@ import 'dart:math';
 import 'package:arm_fight_helper/providers/phase_controller.dart';
 import 'package:arm_fight_helper/providers/rounds_controller.dart';
 import 'package:arm_fight_helper/providers/timer_controller.dart';
+import 'package:arm_fight_helper/widgets/training_summary_widget.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -12,12 +14,56 @@ import 'package:intl/intl.dart';
 
 
 class TrainingIndicatorWidget extends ConsumerWidget {
-  late ChangeNotifierProvider<StartIndicatorPhaseNotifier> phase;
-  late ChangeNotifierProvider<TimerNotifier> timer;
+  static AudioPlayer player = new AudioPlayer();
+  final ChangeNotifierProvider<StartIndicatorPhaseNotifier> phase;
+  final ChangeNotifierProvider<TimerNotifier> timer;
+
+  // !!!ВНИМАНИЕ КОСТЫЛЬ!!! НЕ ТРОГАТЬ ПО ВОЗМОЖНОСТИ
+  static late Phases? prevPhase = Phases.start;
+
   TrainingIndicatorWidget({super.key, required this.phase, required this.timer});
+
+  void playReadySound() async {
+    await player.play(AssetSource('sounds/ready.mp3'));
+  }
+
+  void playGoSound() async {
+    await player.play(AssetSource('sounds/cs-go-flashbang.mp3'));
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    if (
+    ref.watch(phase).currentPhase == Phases.ready
+        && ref.watch(phase).currentPhase != prevPhase
+    )
+    {
+      playReadySound();
+    }
+
+    if (
+    ref.watch(phase).currentPhase == Phases.go
+        && ref.watch(phase).currentPhase != prevPhase
+    ) {
+      playGoSound();
+    }
+    prevPhase = ref.watch(phase).currentPhase;
+
+
+    if (ref.read(timer).timeLeft == 0) {
+      Future.delayed(
+          Duration.zero,
+              () => showDialog(
+                  context: context,
+                  builder: (context) => TrainingSummaryWidget(
+                    ref.watch(timer).totalTime,
+                    phase,
+                    timer
+                  )
+              )
+      );
+    }
+
     return GestureDetector(
       onTap: () {
         if (ref.watch(phase).currentPhase == Phases.start) {
@@ -25,7 +71,6 @@ class TrainingIndicatorWidget extends ConsumerWidget {
           ref.read(phase).nextPhase();
           ref.read(timer).startTimer();
         }
-
       },
 
 
