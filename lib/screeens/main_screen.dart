@@ -148,6 +148,8 @@ class MainScreen extends ConsumerWidget {
 }
 
 class SettingsScreen extends ConsumerWidget {
+  final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final localizations = AppLocalizations.of(context);
@@ -155,23 +157,57 @@ class SettingsScreen extends ConsumerWidget {
     return Container(
       height: MediaQuery.of(context).size.height / 2,
       child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              localizations.translate("settings"),
-            ),
-            SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(1.0),
-                  child: ConstrainedBox(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                localizations.translate("settings"),
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(1.0),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints.tight(const Size(127, 80)),
+                      child: TextFormField(
+                        validator: (String? value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Wrong value';
+                          }
+                          return null;
+                        },
+                        onChanged: (String? value) {
+                          fightController.enemyName1 = value ?? "";
+                        },
+                        decoration: InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                          labelText: localizations.translate("name"),
+                          labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
+                        ),
+                        keyboardType: TextInputType.text,
+                        textInputAction: TextInputAction.done,
+                      ),
+                    ),
+                  ),
+                  ConstrainedBox(
                     constraints: BoxConstraints.tight(const Size(127, 80)),
                     child: TextFormField(
+                      validator: (String? value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Wrong value';
+                        }
+                        return null;
+                      },
                       onChanged: (String? value) {
-                        fightController.enemyName1 = value ?? "";
+                        fightController.enemyName2 = value ?? "";
                       },
                       decoration: InputDecoration(
                         enabledBorder: UnderlineInputBorder(
@@ -179,80 +215,70 @@ class SettingsScreen extends ConsumerWidget {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
-                        labelText: localizations.translate("name"),
+                          labelText: localizations.translate("name"),
                         labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
                       ),
                       keyboardType: TextInputType.text,
                       textInputAction: TextInputAction.done,
                     ),
                   ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              ConstrainedBox(
+                constraints: BoxConstraints.tight(const Size(127, 80)),
+                child: TextFormField(
+                  validator: (String? value) {
+                    if (value == null || value.isEmpty || int.tryParse(value) == null) {
+                      return 'Enter number';
+                    }
+                    return null;
+                  },
+                  onChanged: (String? value) {
+                    ref.read(fightControllerProvider).roundsNum = int.tryParse(value ?? "") ?? 0;
+                  },
+                  decoration: InputDecoration(
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                    labelText: localizations.translate("rounds"),
+                    labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
+                  ),
+                  keyboardType: TextInputType.number,
+                  textInputAction: TextInputAction.done,
                 ),
-                ConstrainedBox(
-                  constraints: BoxConstraints.tight(const Size(127, 80)),
-                  child: TextFormField(
-                    onChanged: (String? value) {
-                      fightController.enemyName2 = value ?? "";
-                    },
-                    decoration: InputDecoration(
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: Theme.of(context).colorScheme.primary,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  if (!_formKey.currentState!.validate()) {
+                    return;
+                  }
+                  if (ref.watch(fightControllerProvider).roundsNum % 2 == 0) {
+                    showDialog(context: context, builder: (context) {
+                      return AlertDialog(
+                        title: Text(
+                          "Select odd number of rounds",
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
-                      ),
-                      labelText: localizations.translate("name"),
-                      labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
-                    ),
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.done,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            ConstrainedBox(
-              constraints: BoxConstraints.tight(const Size(127, 80)),
-              child: TextFormField(
-                onChanged: (String? value) {
-                  ref.read(fightControllerProvider).roundsNum = int.tryParse(value ?? "") ?? 0;
-                },
-                decoration: InputDecoration(
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
-                  ),
-                  labelText: localizations.translate("rounds"),
-                  labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
-                ),
-                keyboardType: TextInputType.number,
-                textInputAction: TextInputAction.done,
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                if (ref.watch(fightControllerProvider).roundsNum % 2 == 0) {
-                  showDialog(context: context, builder: (context) {
-                    return AlertDialog(
-                      title: Text(
-                        "Select odd number of rounds",
-                        style: Theme.of(context).textTheme.bodyMedium,
-                      ),
-                    );
+                      );
 
-                  });
-                  return;
-                }
-                // fightController.saveFightData();
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CompetitionScreen()),
-                );
-              },
-              child: Text(
-                localizations.translate("go_to_competition"),
+                    });
+                    return;
+                  }
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CompetitionScreen()),
+                  );
+                },
+                child: Text(
+                  localizations.translate("go_to_competition"),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -266,9 +292,9 @@ class TrainingSettingsScreen extends StatefulWidget {
   _TrainingSettingsScreenState createState() => _TrainingSettingsScreenState();
 }
 
-class _TrainingSettingsScreenState extends State<TrainingSettingsScreen>{
-  final TextEditingController minutesController = TextEditingController() ..text= '01';
-  final TextEditingController secondsController = TextEditingController() ..text= '00';
+class _TrainingSettingsScreenState extends State<TrainingSettingsScreen> {
+  final TextEditingController minutesController = TextEditingController();
+  final TextEditingController secondsController = TextEditingController();
 
   @override
   void dispose() {
@@ -286,39 +312,47 @@ class _TrainingSettingsScreenState extends State<TrainingSettingsScreen>{
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(localizations.translate("choose_period"),),
-            SizedBox(child:  Row(children: [
-              SizedBox(child:  TextField(
-
-                controller: minutesController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'minutes',
-                ),
-                inputFormatters: [
-                  TimeInputFormatter(),
-                ],
-              ), width: 55,
-                height: 50,
-              ),
-              Text(":", style: TextStyle(fontSize: 30),),
-              SizedBox(child:  TextField(
-                controller: secondsController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'seconds',
-                ),
-                inputFormatters: [
-                  TimeInputFormatter()
-                ],
-              ), width: 55,
-                height: 50,
-              ),
-            ],
-              mainAxisAlignment: MainAxisAlignment.center,
+            Text(
+              localizations.translate("Choose period"),
             ),
+            SizedBox(
+              child: Row(
+                children: [
+                  SizedBox(
+                    child: TextField(
+                      controller: minutesController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'minutes',
+                      ),
+                      inputFormatters: [
+                        TimeInputFormatter(),
+                      ],
+                    ),
+                    width: 55,
+                    height: 50,
+                  ),
+                  Text(
+                    ":",
+                    style: TextStyle(fontSize: 30),
+                  ),
+                  SizedBox(
+                    child: TextField(
+                      controller: secondsController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'seconds',
+                      ),
+                      inputFormatters: [TimeInputFormatter()],
+                    ),
+                    width: 55,
+                    height: 50,
+                  ),
+                ],
+                mainAxisAlignment: MainAxisAlignment.center,
+              ),
               width: 150,
               height: 50,
             ),
