@@ -4,7 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/round_model.dart';
 
 final roundsControllerProvider = ChangeNotifierProvider<RoundsController>((ref) {
-  return RoundsController(roundsNum: ref.watch(fightControllerProvider).roundsNum);
+  int num = ref.watch(fightControllerProvider).roundsNum == 0 ? 2 : ref.watch(fightControllerProvider).roundsNum;
+  return RoundsController(roundsNum: num);
 });
 
 class RoundsController extends ChangeNotifier {
@@ -22,7 +23,7 @@ class RoundsController extends ChangeNotifier {
   int get roundsNum => _rounds.length;
 
   // TODO: initialize rounds with constructor (parse roundsNum from settings)
-
+  List<Round> get allRounds => _rounds;
   Round getRound(int index) {
     return _rounds[index];
   }
@@ -35,14 +36,15 @@ class RoundsController extends ChangeNotifier {
   //   }
   // }
 
-  void endRound({required String winner}) {
+  void endRound() {
     _rounds[_currentRoundIndex].isEnded = true;
-    _rounds[_currentRoundIndex].winner = winner;
     _currentRoundIndex++;
     notifyListeners();
   }
-
-
+  void setWinner(String winner){
+    _rounds[_currentRoundIndex-1].winner = winner;
+  }
+  
 
 
 }

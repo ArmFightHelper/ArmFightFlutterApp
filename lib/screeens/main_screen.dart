@@ -215,7 +215,7 @@ class SettingsScreen extends ConsumerWidget {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
-                        labelText: localizations.translate("Name"),
+                        labelText: localizations.translate("name"),
                         labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
                       ),
                       keyboardType: TextInputType.text,
@@ -242,6 +242,8 @@ class SettingsScreen extends ConsumerWidget {
                       borderSide: BorderSide(
                         color: Theme.of(context).colorScheme.primary,
                       ),
+                      labelText: localizations.translate("name"),
+                      labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
                     ),
                     labelText: localizations.translate("Rounds"),
                     labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
@@ -265,12 +267,42 @@ class SettingsScreen extends ConsumerWidget {
                     );
                   }
                 },
-                child: Text(
-                  localizations.translate("go to competition"),
+                decoration: InputDecoration(
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  labelText: localizations.translate("rounds"),
+                  labelStyle: TextStyle(color: Theme.of(context).colorScheme.primary),
                 ),
               ),
-            ],
-          ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (ref.watch(fightControllerProvider).roundsNum % 2 == 0) {
+                  showDialog(context: context, builder: (context) {
+                    return AlertDialog(
+                      title: Text(
+                        "Select odd number of rounds",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    );
+
+                  });
+                  return;
+                }
+                // fightController.saveFightData();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CompetitionScreen()),
+                );
+              },
+              child: Text(
+                localizations.translate("go_to_competition"),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -284,9 +316,9 @@ class TrainingSettingsScreen extends StatefulWidget {
   _TrainingSettingsScreenState createState() => _TrainingSettingsScreenState();
 }
 
-class _TrainingSettingsScreenState extends State<TrainingSettingsScreen> {
-  final TextEditingController minutesController = TextEditingController();
-  final TextEditingController secondsController = TextEditingController();
+class _TrainingSettingsScreenState extends State<TrainingSettingsScreen>{
+  final TextEditingController minutesController = TextEditingController() ..text= '01';
+  final TextEditingController secondsController = TextEditingController() ..text= '00';
 
   @override
   void dispose() {
@@ -304,47 +336,39 @@ class _TrainingSettingsScreenState extends State<TrainingSettingsScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              localizations.translate("Choose period"),
-            ),
-            SizedBox(
-              child: Row(
-                children: [
-                  SizedBox(
-                    child: TextField(
-                      controller: minutesController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'minutes',
-                      ),
-                      inputFormatters: [
-                        TimeInputFormatter(),
-                      ],
-                    ),
-                    width: 55,
-                    height: 50,
-                  ),
-                  Text(
-                    ":",
-                    style: TextStyle(fontSize: 30),
-                  ),
-                  SizedBox(
-                    child: TextField(
-                      controller: secondsController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'seconds',
-                      ),
-                      inputFormatters: [TimeInputFormatter()],
-                    ),
-                    width: 55,
-                    height: 50,
-                  ),
+            Text(localizations.translate("choose_period"),),
+            SizedBox(child:  Row(children: [
+              SizedBox(child:  TextField(
+
+                controller: minutesController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'minutes',
+                ),
+                inputFormatters: [
+                  TimeInputFormatter(),
                 ],
-                mainAxisAlignment: MainAxisAlignment.center,
+              ), width: 55,
+                height: 50,
               ),
+              Text(":", style: TextStyle(fontSize: 30),),
+              SizedBox(child:  TextField(
+                controller: secondsController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'seconds',
+                ),
+                inputFormatters: [
+                  TimeInputFormatter()
+                ],
+              ), width: 55,
+                height: 50,
+              ),
+            ],
+              mainAxisAlignment: MainAxisAlignment.center,
+            ),
               width: 150,
               height: 50,
             ),
@@ -361,7 +385,7 @@ class _TrainingSettingsScreenState extends State<TrainingSettingsScreen> {
                 );
               },
               child: Text(
-                localizations.translate("go to training"),
+                localizations.translate("go_to_training"),
               ),
             ),
           ],
@@ -391,7 +415,7 @@ final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeData>((ref) {
 });
 
 class ThemeNotifier extends StateNotifier<ThemeData> {
-  ThemeNotifier() : super(buildLightTheme());
+  ThemeNotifier() : super(buildDarkTheme());
 
   void toggleTheme() {
     state = state.brightness == Brightness.light ? buildDarkTheme() : buildLightTheme();
