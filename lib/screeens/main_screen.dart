@@ -230,6 +230,18 @@ class SettingsScreen extends ConsumerWidget {
             ),
             ElevatedButton(
               onPressed: () {
+                if (ref.watch(fightControllerProvider).roundsNum % 2 == 0) {
+                  showDialog(context: context, builder: (context) {
+                    return AlertDialog(
+                      title: Text(
+                        "Select odd number of rounds",
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    );
+
+                  });
+                  return;
+                }
                 // fightController.saveFightData();
                 Navigator.push(
                   context,
