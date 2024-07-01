@@ -254,9 +254,9 @@ class TrainingSettingsScreen extends StatefulWidget {
   _TrainingSettingsScreenState createState() => _TrainingSettingsScreenState();
 }
 
-class _TrainingSettingsScreenState extends State<TrainingSettingsScreen> {
-  final TextEditingController minutesController = TextEditingController();
-  final TextEditingController secondsController = TextEditingController();
+class _TrainingSettingsScreenState extends State<TrainingSettingsScreen>{
+  final TextEditingController minutesController = TextEditingController() ..text= '01';
+  final TextEditingController secondsController = TextEditingController() ..text= '00';
 
   @override
   void dispose() {
@@ -274,44 +274,32 @@ class _TrainingSettingsScreenState extends State<TrainingSettingsScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              localizations.translate("Choose period"),
-            ),
-            SizedBox(
-              child: Row(
-                children: [
-                  SizedBox(
-                    child: TextField(
-                      controller: minutesController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'minutes',
-                      ),
-                      inputFormatters: [
-                        TimeInputFormatter(),
-                      ],
-                    ),
-                    width: 55,
-                    height: 50,
-                  ),
-                  Text(
-                    ":",
-                    style: TextStyle(fontSize: 30),
-                  ),
-                  SizedBox(
-                    child: TextField(
-                      controller: secondsController,
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'seconds',
-                      ),
-                      inputFormatters: [TimeInputFormatter()],
-                    ),
-                    width: 55,
-                    height: 50,
-                  ),
+            Text(localizations.translate("Choose period"),),
+            SizedBox(child:  Row(children: [
+              SizedBox(child:  TextField(
+
+                controller: minutesController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'minutes',
+                ),
+                inputFormatters: [
+                  TimeInputFormatter(),
+                ],
+              ), width: 55,
+                height: 50,
+              ),
+              Text(":", style: TextStyle(fontSize: 30),),
+              SizedBox(child:  TextField(
+                controller: secondsController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'seconds',
+                ),
+                inputFormatters: [
+                  TimeInputFormatter()
                 ],
                 mainAxisAlignment: MainAxisAlignment.center,
               ),
