@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../constants.dart';
 
 class PauseButtonWidget extends ConsumerWidget {
-  late ChangeNotifierProvider<TimerNotifier> local;
+  late final ChangeNotifierProvider<TimerNotifier> local;
   PauseButtonWidget({super.key, int index = 0, ChangeNotifierProvider<TimerNotifier>? provider}){
     if(index == 0){local = timerProvider;}
     else{local = provider!;}
