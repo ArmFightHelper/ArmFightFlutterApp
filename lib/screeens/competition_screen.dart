@@ -31,7 +31,7 @@ class CompetitionScreen extends ConsumerWidget {
               StartIndicatorWidget(),
               RoundsWidget(),
               Expanded(child: SizedBox()),
-              PauseButtonWidget()
+              RestartButtonWidget()
             ],
         ),
       ),
