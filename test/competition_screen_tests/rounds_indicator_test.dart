@@ -17,7 +17,7 @@ class TestApp extends ConsumerWidget {
       debugShowCheckedModeBanner: false,
       theme: theme,
       title: 'ArmFight Helper',
-      home: const CompetitionScreen(),
+      home: const CompetitionScreen(enemyName1: '', enemyName2: '',),
     );
   }
 
