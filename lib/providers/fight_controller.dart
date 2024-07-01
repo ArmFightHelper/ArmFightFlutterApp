@@ -35,7 +35,6 @@ class FightController extends ChangeNotifier {
 
   set roundsNum(int value) {
     _roundsNum = value;
-    print('roundsNum updated: $_roundsNum');
     notifyListeners();
   }
 
@@ -45,13 +44,24 @@ class FightController extends ChangeNotifier {
 
   int get roundsNum => _roundsNum ?? 0;
 
-  void saveFightData() {
-    historyController.addFightSession(FightSession(
-      date: DateTime.now(),
-      winnerName: _enemyName1!,
-      loserName: _enemyName2!,
-      rounds: _roundsNum!,
-    ));
-    notifyListeners();
+  ///After finishing the fight, save the data to the history if Enemy1 win,
+  /// make  [isEnemy1Win] true, else make [isEnemy2Win] false
+  void saveFightData({required bool isEnemy1Win}) {
+    if (isEnemy1Win) {
+      historyController.addFightSession(FightSession(
+        winnerName: _enemyName1!,
+        loserName: _enemyName2!,
+        rounds: _roundsNum!,
+        date: DateTime.now(),
+      ));
+    } else {
+      historyController.addFightSession(FightSession(
+        winnerName: _enemyName2!,
+        loserName: _enemyName1!,
+        rounds: _roundsNum!,
+        date: DateTime.now(),
+      ));
+    }
+    reset();
   }
 }
