@@ -24,7 +24,7 @@ class TimerNotifier with ChangeNotifier {
   get timeLeft => _timerValue;
   get totalTime => _totalTime;
 
-  TimerNotifier(this._startIndicatorPhaseNotifier, this._randomTimerNotifier, {time = 1, key=0}) {
+  TimerNotifier(this._startIndicatorPhaseNotifier, this._randomTimerNotifier, {time = 8, key=0}) {
     if(key == 0){
       initializeTimer(timePeriod: time);
     }

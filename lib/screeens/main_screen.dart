@@ -174,6 +174,7 @@ class SettingsScreen extends ConsumerWidget {
                     child: ConstrainedBox(
                       constraints: BoxConstraints.tight(const Size(127, 80)),
                       child: TextFormField(
+                        key: const Key("name_1"),
                         validator: (String? value) {
                           if (value == null || value.isEmpty) {
                             return 'Wrong value';
@@ -200,6 +201,7 @@ class SettingsScreen extends ConsumerWidget {
                   ConstrainedBox(
                     constraints: BoxConstraints.tight(const Size(127, 80)),
                     child: TextFormField(
+                      key: const Key("name_2"),
                       validator: (String? value) {
                         if (value == null || value.isEmpty) {
                           return 'Wrong value';
@@ -228,6 +230,7 @@ class SettingsScreen extends ConsumerWidget {
               ConstrainedBox(
                 constraints: BoxConstraints.tight(const Size(127, 80)),
                 child: TextFormField(
+                  key: const Key("rounds_num"),
                   validator: (String? value) {
                     if (value == null || value.isEmpty || int.tryParse(value) == null) {
                       return 'Enter number';
@@ -251,6 +254,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ),
               ElevatedButton(
+                key: Key("go_to_competition"),
                 onPressed: () {
                   if (!_formKey.currentState!.validate()) {
                     return;

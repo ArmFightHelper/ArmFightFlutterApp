@@ -50,6 +50,7 @@ class StartIndicatorWidget extends ConsumerWidget {
           Stack(
             children: <Widget>[
               Container(
+                key: Key("blurred_stuff"),
                 height: 155,
                 width: 155,
                 decoration: BoxDecoration(

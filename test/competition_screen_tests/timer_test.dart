@@ -48,7 +48,7 @@ void main() {
     expect(find.text("START"), findsOne);
     await tester.tap(find.byType(StartIndicatorWidget));
 
-    await tester.pump(const Duration(seconds: 1));
+    await tester.pump(const Duration(seconds: 8));
     expect(find.text("00:00"), findsOne);
     await tester.pump(const Duration(seconds: 3));
     expect(find.text("READY"), findsOne);
