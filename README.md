@@ -26,3 +26,6 @@ In training you can train your reaction.
 2) Traiining: training of reaction during customable time with clear voice and view hints
 3) History: you can track previous fights and see who won
 4) Customization: choose theme (dark/light) and language (ru/eng) according to your preferences
+
+
+Presentation link: https://www.figma.com/deck/FerGkHX9Ewnd96RpuNPPyc/Presentation-2?node-id=5-30&t=EIUB9U45UalmqCIl-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1
