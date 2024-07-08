@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:arm_fight_helper/providers/random_timer_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,8 +24,13 @@ class TimerNotifier with ChangeNotifier {
   get timeLeft => _timerValue;
   get totalTime => _totalTime;
 
-  TimerNotifier(this._startIndicatorPhaseNotifier, this._randomTimerNotifier) {
-    initializeTimer(timePeriod: 1);
+  TimerNotifier(this._startIndicatorPhaseNotifier, this._randomTimerNotifier, {time = 8, key=0}) {
+    if(key == 0){
+      initializeTimer(timePeriod: time);
+    }
+    else if(key == 1){
+      initializeCountDown(timePeriod: time);
+    }
     // TODO: get from settings
   }
 
@@ -59,6 +66,46 @@ class TimerNotifier with ChangeNotifier {
           timeLeft--;
           _totalTime++;
           _timerValue = timeLeft;
+          notifyListeners();
+        }
+    );
+  }
+
+  void initializeCountDown({required int timePeriod}) async{
+    int timeLeft = timePeriod;
+    _timerValue = timePeriod;
+    _totalTime = timePeriod;
+    int interval = 3;
+    int randomMoment = Random().nextInt(10)+3;
+
+    _timer = PausableTimer.periodic(
+        const Duration(seconds: 1),
+            () {
+          if (timeLeft == 0) {
+            _timer.pause();
+
+            /*_timer.reset();
+            timeLeft = timePeriod;
+            _timerValue = timePeriod;*/
+
+            //_startIndicatorPhaseNotifier.nextPhase();
+            //_randomTimerNotifier.startTimer();
+            return;
+            // Proceed to next phase
+          }
+
+          timeLeft--;
+          _timerValue = timeLeft;
+
+          int moment = _totalTime - _timerValue;
+          if(moment == randomMoment){
+            _startIndicatorPhaseNotifier.movePhase(1);
+          }
+          if(moment == randomMoment+interval){
+            randomMoment += Random().nextInt(10) + 5;
+            _startIndicatorPhaseNotifier.movePhase(-1);
+          }
+
           notifyListeners();
         }
     );

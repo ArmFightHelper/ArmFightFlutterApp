@@ -41,6 +41,13 @@ class StartIndicatorPhaseNotifier extends ChangeNotifier {
     _safeNotifyListeners();
   }
 
+  void movePhase(int step){
+    if (_currentPhaseIndex + step < 0 || _currentPhaseIndex + step >= phasesSequence.length) {
+      throw ErrorDescription("Phase doesn't exist");
+    }
+    _currentPhaseIndex += step;
+  }
+
   void endCurrentRound() {
     _currentPhaseIndex = 0;
     _roundsController.endRound();

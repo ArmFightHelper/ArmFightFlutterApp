@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/round_model.dart';
 
 final roundsControllerProvider = ChangeNotifierProvider<RoundsController>((ref) {
-  int num = ref.watch(fightControllerProvider).roundsNum == 0 ? 2 : ref.watch(fightControllerProvider).roundsNum;
+  int num = ref.watch(fightControllerProvider).roundsNum == 0 ? 3 : ref.watch(fightControllerProvider).roundsNum;
   return RoundsController(roundsNum: num);
 });
 

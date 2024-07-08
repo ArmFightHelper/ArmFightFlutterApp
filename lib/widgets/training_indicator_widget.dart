@@ -2,6 +2,8 @@ import 'dart:math';
 import 'package:arm_fight_helper/providers/phase_controller.dart';
 import 'package:arm_fight_helper/providers/rounds_controller.dart';
 import 'package:arm_fight_helper/providers/timer_controller.dart';
+import 'package:arm_fight_helper/widgets/training_summary_widget.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +11,17 @@ import 'dart:ui' as ui;
 import 'package:google_fonts/google_fonts.dart';
 import '../constants.dart';
 import 'package:intl/intl.dart';
-import 'package:audioplayers/audioplayers.dart';
 
-class StartIndicatorWidget extends ConsumerWidget {
+
+class TrainingIndicatorWidget extends ConsumerWidget {
   static AudioPlayer player = new AudioPlayer();
-  const StartIndicatorWidget({super.key});
+  final ChangeNotifierProvider<StartIndicatorPhaseNotifier> phase;
+  final ChangeNotifierProvider<TimerNotifier> timer;
+
+  // !!!ВНИМАНИЕ КОСТЫЛЬ!!! НЕ ТРОГАТЬ ПО ВОЗМОЖНОСТИ
+  static late Phases? prevPhase = Phases.start;
+
+  TrainingIndicatorWidget({super.key, required this.phase, required this.timer});
 
   void playReadySound() async {
     await player.play(AssetSource('sounds/ready.mp3'));
@@ -25,24 +33,47 @@ class StartIndicatorWidget extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    if (ref.watch(startIndicatorPhaseProvider).currentPhase == Phases.ready) {
+    if (
+    ref.watch(phase).currentPhase == Phases.ready
+        && ref.watch(phase).currentPhase != prevPhase
+    )
+    {
       playReadySound();
     }
 
-    if (ref.watch(startIndicatorPhaseProvider).currentPhase == Phases.go) {
+    if (
+    ref.watch(phase).currentPhase == Phases.go
+        && ref.watch(phase).currentPhase != prevPhase
+    ) {
       playGoSound();
+    }
+    prevPhase = ref.watch(phase).currentPhase;
+
+
+    if (ref.read(timer).timeLeft == 0) {
+      Future.delayed(
+          Duration.zero,
+              () => showDialog(
+                  context: context,
+                  builder: (context) => TrainingSummaryWidget(
+                    ref.watch(timer).totalTime,
+                    phase,
+                    timer
+                  )
+              )
+      );
     }
 
     return GestureDetector(
-      onTap: () async {
-        if (ref.watch(startIndicatorPhaseProvider).currentPhase == Phases.start
-            && ref.watch(roundsControllerProvider).currentRoundIndex != ref.watch(roundsControllerProvider).roundsNum
-        ) {
-          ref.read(startIndicatorPhaseProvider).nextPhase();
-          ref.read(timerProvider).startTimer();
+      onTap: () {
+        if (ref.watch(phase).currentPhase == Phases.start) {
+          ref.read(phase).nextPhase();
+          ref.read(phase).nextPhase();
+          ref.read(timer).startTimer();
         }
-
       },
+
+
 
       child: Stack(
         alignment: Alignment.center,
@@ -50,13 +81,12 @@ class StartIndicatorWidget extends ConsumerWidget {
           Stack(
             children: <Widget>[
               Container(
-                key: Key("blurred_stuff"),
-                height: 155,
-                width: 155,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Phases.toColor(context: context, phase: ref.watch(startIndicatorPhaseProvider).currentPhase)
-                )
+                  height: 155,
+                  width: 155,
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Phases.toColor(context: context, phase: ref.watch(phase).currentPhase)
+                  )
               ),
 
               Positioned.fill(
@@ -83,14 +113,14 @@ class StartIndicatorWidget extends ConsumerWidget {
             child: TweenAnimationBuilder<double>(
               tween: Tween<double>(
                 begin: 0,
-                end: ref.watch(timerProvider).timeLeft / ref.watch(timerProvider).totalTime,
+                end: ref.watch(timer).timeLeft / ref.watch(timer).totalTime,
               ),
               duration: const Duration(milliseconds: 500),
               builder: (context, value, child) {
                 return CircularProgressIndicator(
                   value: value,
                   strokeWidth: 13,
-                  color: Phases.toColor(context: context, phase: ref.watch(startIndicatorPhaseProvider).currentPhase),
+                  color: Phases.toColor(context: context, phase: ref.watch(phase).currentPhase),
                 );
               },
             ),
@@ -106,15 +136,15 @@ class StartIndicatorWidget extends ConsumerWidget {
           ),
 
           Text(
-            switch (ref.watch(startIndicatorPhaseProvider).currentPhase) {
+            switch (ref.watch(phase).currentPhase) {
               Phases.start => "START",
               Phases.ready => "READY",
               Phases.go => "GO",
               Phases.preparation => DateFormat("mm:ss").format(
                   DateTime(
                       0, 0, 0, 0,
-                      ref.watch(timerProvider).timeLeft ~/ 60,
-                      ref.watch(timerProvider).timeLeft % 60
+                      ref.watch(timer).timeLeft ~/ 60,
+                      ref.watch(timer).timeLeft % 60
                   )
               ),
               Object() => throw UnimplementedError(),

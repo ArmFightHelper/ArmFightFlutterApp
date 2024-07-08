@@ -149,15 +149,12 @@ class MainScreen extends ConsumerWidget {
 }
 
 
-
-
-
 final themeProvider = StateNotifierProvider<ThemeNotifier, ThemeData>((ref) {
   return ThemeNotifier();
 });
 
 class ThemeNotifier extends StateNotifier<ThemeData> {
-  ThemeNotifier() : super(buildLightTheme());
+  ThemeNotifier() : super(buildDarkTheme());
 
   void toggleTheme() {
     state = state.brightness == Brightness.light ? buildDarkTheme() : buildLightTheme();
