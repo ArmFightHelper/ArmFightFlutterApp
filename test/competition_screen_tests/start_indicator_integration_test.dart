@@ -1,6 +1,6 @@
 import 'package:arm_fight_helper/l10n/app_localizations.dart';
 import 'package:arm_fight_helper/language_notifier.dart';
-import 'package:arm_fight_helper/screeens/competition_screen.dart';
+import 'package:arm_fight_helper/screeens/competition_settings_screen.dart';
 import 'package:arm_fight_helper/screeens/main_screen.dart';
 import 'package:arm_fight_helper/widgets/start_indicator_widget.dart';
 import 'package:arm_fight_helper/widgets/winner_choise_widget.dart';
