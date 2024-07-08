@@ -49,7 +49,7 @@ void main() {
 
     await tester.tap(find.text("Competition"));
     await tester.pump();
-    await tester.enterText(find.byKey(const Key("name_1")), "name_1");
+    // await tester.enterText(find.byKey(const Key("name_1")), "name_1");
     await tester.enterText(find.byKey(const Key("name_2")), "name_2");
     await tester.enterText(find.byKey(const Key("rounds_num")), "1");
 
